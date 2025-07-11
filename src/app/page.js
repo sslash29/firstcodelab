@@ -2,10 +2,16 @@ import Link from "next/link";
 
 export default function page() {
   return (
-    <div>
-      <Link href="/admin">admin</Link>
-      <Link href="/instructor">instructor</Link>
-      <Link href="/student">student</Link>
+    <div className="flex flex-col text-2xl  gap-2">
+      <Link href="/admin" className="hover:scale-105 transition-all">
+        admin
+      </Link>
+      <Link href="/instructor" className="hover:scale-105 transition-all">
+        instructor
+      </Link>
+      <Link href="/student" className="hover:scale-105 transition-all">
+        student
+      </Link>
     </div>
   );
 }

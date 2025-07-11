@@ -1,6 +1,6 @@
 "use client";
 
-import addUser from "@/lib/action";
+import { addUser } from "@/lib/action";
 import { useActionState, useState } from "react";
 import SubmitButton from "./SubmitButton";
 

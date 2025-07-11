@@ -1,9 +1,11 @@
 import FormAddGroup from "@/components/FormAddGroup";
+import { getUsers } from "@/lib/data-servcie";
 
-function page() {
+async function page() {
+  const { instructors, students } = await getUsers();
   return (
     <div>
-      <FormAddGroup />
+      <FormAddGroup instructors={instructors} students={students} />
     </div>
   );
 }
