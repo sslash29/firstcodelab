@@ -4,7 +4,7 @@ import {
   deleteGroup,
   deleteInstructorFromGroup,
   deleteStudentFromGroup,
-} from "@/lib/action";
+} from "@/lib/actions/adminAction";
 import { useActionState, useOptimistic } from "react";
 import AddStudent from "./AddStudent";
 import AddInstructor from "./AddInstructor";

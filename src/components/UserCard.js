@@ -4,7 +4,7 @@ import { useState } from "react";
 import EditInput from "./EditInput";
 import SubmitButton from "./SubmitButton";
 import { useActionState } from "react";
-import { deleteUser, updateUser } from "@/lib/action";
+import { deleteUser, updateUser } from "@/lib/actions/adminAction";
 
 function UserCard({ user }) {
   const [isEdit, setIsEdit] = useState(false);

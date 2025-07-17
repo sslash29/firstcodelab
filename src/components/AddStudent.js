@@ -1,6 +1,6 @@
 "use client";
 
-import { addStudentToGroup } from "@/lib/action";
+import { addStudentToGroup } from "@/lib/actions/adminAction";
 import { useActionState, useState, useRef, useEffect } from "react";
 import SubmitButton from "./SubmitButton";
 

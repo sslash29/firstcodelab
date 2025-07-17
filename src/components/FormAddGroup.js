@@ -3,7 +3,7 @@
 import { useState } from "react";
 import SubmitButton from "./SubmitButton";
 import { useActionState } from "react";
-import { addGroup } from "@/lib/action";
+import { addGroup } from "@/lib/actions/adminAction";
 
 function FormAddGroup({ instructors = [], students = [] }) {
   const [form, setForm] = useState({

@@ -1,6 +1,6 @@
 "use server";
 
-import { supabase } from "./supabase";
+import { supabase } from "../supabase";
 
 async function addUser(prevState, queryData) {
   const fullName = queryData.get("fullName");
