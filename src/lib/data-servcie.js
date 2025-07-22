@@ -179,6 +179,8 @@ async function getStudentHomework(studentId) {
   return data;
 }
 
+async function getHomeworkForInstructor() {}
+
 export {
   getUsers,
   getGroups,
