@@ -179,7 +179,210 @@ async function getStudentHomework(studentId) {
   return data;
 }
 
-async function getHomeworkForInstructor() {}
+async function getHomeworkForInstructor(instructorId) {
+  const { data: homeworks, error: homeworkError } = await supabase
+    .from("homework")
+    .select("*")
+    .eq("instructor_id", instructorId);
+
+  if (homeworkError) {
+    console.error("Error fetching homework:", homeworkError.message);
+    return [];
+  }
+
+  const { data: groupAssignments, error: groupError } = await supabase
+    .from("group_assignment")
+    .select("group_id")
+    .eq("instructor_id", instructorId);
+
+  if (groupError) {
+    console.error("Error fetching instructor groups:", groupError.message);
+    return [];
+  }
+
+  const groupIds = groupAssignments.map((g) => g.group_id);
+  if (groupIds.length === 0) return [];
+
+  const { data: studentAssignments, error: studentError } = await supabase
+    .from("group_assignment")
+    .select("student_id, group_id")
+    .in("group_id", groupIds)
+    .not("student_id", "is", null);
+
+  if (studentError) {
+    console.error(
+      "Error fetching students in instructor groups:",
+      studentError.message
+    );
+    return [];
+  }
+
+  const studentIds = [...new Set(studentAssignments.map((s) => s.student_id))];
+  const studentGroupMap = Object.fromEntries(
+    studentAssignments.map((s) => [s.student_id, s.group_id])
+  );
+
+  if (studentIds.length === 0) return [];
+
+  const { data: studentDetails, error: studentInfoError } = await supabase
+    .from("student")
+    .select("id, full_name")
+    .in("id", studentIds);
+
+  if (studentInfoError) {
+    console.error("Error fetching student names:", studentInfoError.message);
+    return [];
+  }
+
+  const studentMap = Object.fromEntries(
+    (studentDetails || []).map((s) => [s.id, s.full_name])
+  );
+
+  const { data: homeworkAssignments, error: haError } = await supabase
+    .from("homework_assignment")
+    .select("*")
+    .in(
+      "homework_id",
+      homeworks.map((h) => h.id)
+    )
+    .in("student_id", studentIds);
+
+  if (haError) {
+    console.error("Error fetching homework assignments:", haError.message);
+    return [];
+  }
+
+  const assignmentGroupIds = [
+    ...new Set([
+      ...homeworkAssignments.map((a) => a.group_id),
+      ...Object.values(studentGroupMap),
+    ]),
+  ].filter(Boolean);
+
+  const { data: groupData, error: groupFetchError } = await supabase
+    .from("group")
+    .select("id, name")
+    .in("id", assignmentGroupIds);
+
+  if (groupFetchError) {
+    console.error("Error fetching group names:", groupFetchError.message);
+    return [];
+  }
+
+  const groupNameMap = Object.fromEntries(
+    (groupData || []).map((g) => [g.id, g.name])
+  );
+
+  const submissionsByHomework = {};
+  for (const hw of homeworks) {
+    submissionsByHomework[hw.id] = {
+      homework: hw,
+      submitted: [],
+      notSubmitted: [],
+    };
+
+    for (const studentId of studentIds) {
+      const submitted = homeworkAssignments.find(
+        (h) => h.homework_id === hw.id && h.student_id === studentId
+      );
+
+      const groupId = submitted?.group_id || studentGroupMap[studentId] || null;
+      const groupName = groupId ? groupNameMap[groupId] || "Unknown" : null;
+
+      let fileUrl = null;
+      if (submitted?.submission_file) {
+        const { data: urlData, error: urlError } = supabase.storage
+          .from("homework-submissions")
+          .getPublicUrl(submitted.submission_file);
+
+        if (!urlError && urlData?.publicUrl) {
+          fileUrl = urlData.publicUrl;
+        }
+      }
+
+      if (submitted) {
+        submissionsByHomework[hw.id].submitted.push({
+          ...submitted,
+          studentName: studentMap[studentId] || "Unknown",
+          groupName,
+          fileUrl,
+        });
+      } else {
+        submissionsByHomework[hw.id].notSubmitted.push({
+          student_id: studentId,
+          studentName: studentMap[studentId] || "Unknown",
+          groupId,
+          groupName,
+        });
+      }
+    }
+  }
+
+  return Object.values(submissionsByHomework);
+}
+
+async function getUsersWithGroups() {
+  const students = await fetchTable("student");
+  const instructors = await fetchTable("instructor");
+  const admins = await fetchTable("admin");
+
+  const getGroupInfo = async (userId, role) => {
+    const column = role === "student" ? "student_id" : "instructor_id";
+    const { data, error } = await supabase
+      .from("group_assignment")
+      .select("group_id, group(name)")
+      .eq(column, userId);
+
+    if (error && error.code !== "PGRST116") {
+      console.error(
+        `Error getting group for ${role} ${userId}:`,
+        error.message
+      );
+    }
+
+    return data && Array.isArray(data) && data.length > 0
+      ? {
+          groupId: data.map((entry) => entry.group_id),
+          groupName: data.map((entry) => entry.group?.name),
+        }
+      : { groupId: null, groupName: null };
+  };
+
+  const enrichedStudents = await Promise.all(
+    (students || []).map(async (student) => {
+      const group = await getGroupInfo(student.id, "student");
+      return {
+        ...student,
+        role: "student",
+        ...group,
+      };
+    })
+  );
+
+  const enrichedInstructors = await Promise.all(
+    (instructors || []).map(async (instructor) => {
+      const group = await getGroupInfo(instructor.id, "instructor");
+      return {
+        ...instructor,
+        role: "instructor",
+        ...group,
+      };
+    })
+  );
+
+  const enrichedAdmins = (admins || []).map((admin) => ({
+    ...admin,
+    role: "admin",
+    groupId: null,
+    groupName: null,
+  }));
+
+  return {
+    students: enrichedStudents,
+    instructors: enrichedInstructors,
+    admins: enrichedAdmins,
+  };
+}
 
 export {
   getUsers,
@@ -187,4 +390,6 @@ export {
   getInstructorSessionsWithGroups,
   getStudentSession,
   getStudentHomework,
+  getUsersWithGroups,
+  getHomeworkForInstructor,
 };

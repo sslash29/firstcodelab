@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import SubmitButton from "./SubmitButton";
 import { useActionState } from "react";
+import SubmitButton from "./SubmitButton";
 import { addGroup } from "@/lib/actions/adminAction";
 
 function FormAddGroup({ instructors = [], students = [] }) {
@@ -41,120 +41,129 @@ function FormAddGroup({ instructors = [], students = [] }) {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto space-y-6">
-      <form action={formAction} className="space-y-4">
-        <input
-          type="hidden"
-          name="adminId"
-          value="e980c315-d446-4c20-9a6c-e316f4024ecd"
-        />
-        <input
-          type="hidden"
-          name="instructors"
-          value={JSON.stringify(form.instructors)}
-        />
-        <input
-          type="hidden"
-          name="students"
-          value={JSON.stringify(form.students)}
-        />
+    <div className="w-full h-dvh flex items-center justify-center">
+      <div className="flex flex-col items-center justify-center p-5 bg-white border w-[431px] gap-5 rounded-lg ">
+        <div className="text-center font-bold text-5xl">Create Group</div>
 
-        <input
-          name="groupName"
-          placeholder="Group name"
-          value={form.groupName}
-          onChange={(e) => setForm({ ...form, groupName: e.target.value })}
-          className="w-full p-2 border rounded"
-        />
+        <form action={formAction} className="space-y-3 w-full">
+          <input
+            type="hidden"
+            name="adminId"
+            value="e980c315-d446-4c20-9a6c-e316f4024ecd"
+          />
+          <input
+            type="hidden"
+            name="instructors"
+            value={JSON.stringify(form.instructors)}
+          />
+          <input
+            type="hidden"
+            name="students"
+            value={JSON.stringify(form.students)}
+          />
 
-        {/* Instructors */}
-        <div>
-          <label className="block mb-1 font-medium">Add Instructor</label>
-          <div className="flex gap-2">
-            <select
-              className="p-2 border rounded w-full bg-black text-white"
-              value={selectedInstructor}
-              onChange={(e) => setSelectedInstructor(e.target.value)}
-            >
-              <option value="">Select an instructor</option>
-              {instructors.map((inst) => (
-                <option key={inst.userId} value={inst.userId}>
-                  {inst.full_name}
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              onClick={handleAddInstructor}
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Add
-            </button>
+          <div className="flex flex-col">
+            <label className="font-bold">Group Name</label>
+            <input
+              name="groupName"
+              placeholder="Group name..."
+              className="border rounded-lg p-1 pl-2"
+              value={form.groupName}
+              onChange={(e) => setForm({ ...form, groupName: e.target.value })}
+            />
           </div>
 
-          {form.instructors.length > 0 && (
-            <div className="mt-3 flex gap-2 overflow-x-auto p-2 bg-black text-white rounded">
-              {form.instructors.map((inst, index) => (
-                <div
-                  key={inst.userId}
-                  className="bg-gray-600 shadow px-3 py-1 rounded text-sm whitespace-nowrap"
-                >
-                  {index === 0 ? "Primary: " : "Secondary: "} {inst.full_name}
-                </div>
-              ))}
+          {/* Instructors */}
+          <div className="flex flex-col">
+            <label className="font-bold">Add Instructor</label>
+            <div className="flex gap-2">
+              <select
+                className="border rounded-lg p-1 pl-2 w-full bg-[#252525] text-white"
+                value={selectedInstructor}
+                onChange={(e) => setSelectedInstructor(e.target.value)}
+              >
+                <option value="">Select an instructor</option>
+                {instructors.map((inst) => (
+                  <option key={inst.userId} value={inst.userId}>
+                    {inst.full_name}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={handleAddInstructor}
+                className="bg-blue-500 text-white px-3 rounded"
+              >
+                Add
+              </button>
             </div>
-          )}
-        </div>
-
-        {/* Students */}
-        <div>
-          <label className="block mb-1 font-medium">Add Student</label>
-          <div className="flex gap-2">
-            <select
-              className="p-2 border rounded w-full bg-black text-white"
-              value={selectedStudent}
-              onChange={(e) => setSelectedStudent(e.target.value)}
-            >
-              <option value="">Select a student</option>
-              {students.map((stu) => (
-                <option key={stu.userId} value={stu.userId}>
-                  {stu.full_name}
-                </option>
-              ))}
-            </select>
-            <button
-              type="button"
-              onClick={handleAddStudent}
-              className="px-4 py-2 bg-blue-500 text-white rounded"
-            >
-              Add
-            </button>
+            {form.instructors.length > 0 && (
+              <div className="mt-2 flex gap-2 flex-wrap bg-[#252525] text-white p-2 rounded">
+                {form.instructors.map((inst, index) => (
+                  <div
+                    key={inst.userId}
+                    className="bg-gray-700 px-3 py-1 rounded text-sm whitespace-nowrap"
+                  >
+                    {index === 0 ? "Primary: " : "Secondary: "}
+                    {inst.full_name}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
-          {form.students.length > 0 && (
-            <div className="mt-3 flex gap-2 overflow-x-auto p-2 bg-black text-white rounded">
-              {form.students.map((stu) => (
-                <div
-                  key={stu.userId}
-                  className="bg-gray-600 shadow px-3 py-1 rounded text-sm whitespace-nowrap"
-                >
-                  Student: {stu.full_name}
-                </div>
-              ))}
+          {/* Students */}
+          <div className="flex flex-col">
+            <label className="font-bold">Add Student</label>
+            <div className="flex gap-2">
+              <select
+                className="border rounded-lg p-1 pl-2 w-full bg-[#252525] text-white"
+                value={selectedStudent}
+                onChange={(e) => setSelectedStudent(e.target.value)}
+              >
+                <option value="">Select a student</option>
+                {students.map((stu) => (
+                  <option key={stu.userId} value={stu.userId}>
+                    {stu.full_name}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={handleAddStudent}
+                className="bg-blue-500 text-white px-3 rounded"
+              >
+                Add
+              </button>
+            </div>
+            {form.students.length > 0 && (
+              <div className="mt-2 flex gap-2 flex-wrap bg-[#252525] text-white p-2 rounded">
+                {form.students.map((stu) => (
+                  <div
+                    key={stu.userId}
+                    className="bg-gray-700 px-3 py-1 rounded text-sm whitespace-nowrap"
+                  >
+                    Student: {stu.full_name}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <SubmitButton title="Create Group" titleUpdating="Creating..." />
+
+          {formState?.success && (
+            <div className="text-green-600 font-semibold">
+              Group created successfully!
             </div>
           )}
-        </div>
-
-        <SubmitButton title="Create Group" titleUpdating="Creating..." />
-
-        {/* Feedback messages */}
-        {formState?.success && (
-          <p className="text-green-500 mt-2">Group created successfully!</p>
-        )}
-        {formState?.success === false && (
-          <p className="text-red-500 mt-2">{formState.message}</p>
-        )}
-      </form>
+          {formState?.success === false && (
+            <div className="text-red-600 font-semibold">
+              Failed to create group.
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }

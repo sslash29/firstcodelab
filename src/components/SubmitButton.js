@@ -8,11 +8,11 @@ function SubmitButton({ title = "Add", titleUpdating = "Adding..." }) {
     <button
       type="submit"
       disabled={pending}
-      className={`px-2 py-2.5 bg-red-500 transition-colors duration-200
+      className={`px-2 py-2.5 bg-[#35A7FF] text-white font-semibold transition-all duration-200 rounded-md 
           ${
             pending
               ? "bg-red-300 opacity-50 cursor-not-allowed"
-              : "hover:bg-red-400"
+              : "hover:scale-95"
           }
   `}
     >

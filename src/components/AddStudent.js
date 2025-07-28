@@ -26,6 +26,12 @@ function AddStudent({ students = [], group }) {
     }
   };
 
+  const handleCancel = () => {
+    setShowStudent(false);
+    setSelectedStudent("");
+    setStudentForm({ students: [] });
+  };
+
   useEffect(() => {
     if (studentsInputRef.current) {
       studentsInputRef.current.value = JSON.stringify(
@@ -35,7 +41,7 @@ function AddStudent({ students = [], group }) {
   }, [studentForm.students]);
 
   return (
-    <div className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-md border border-zinc-300 dark:border-zinc-700 max-w-xl mx-auto">
+    <div className="bg-white px-4 py-2 text-xs rounded-xl dark max-w-xl mx-auto">
       <form action={addStudentAction} className="flex flex-col gap-4">
         <input type="hidden" name="groupId" value={group.id} />
         <input
@@ -45,14 +51,11 @@ function AddStudent({ students = [], group }) {
           defaultValue="[]"
         />
 
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-zinc-800 dark:text-zinc-200">
-            Student Assignment
-          </h2>
+        <div className="flex justify-between items-center w-fit">
           <button
             type="button"
-            onClick={() => setShowStudent((prev) => !prev)}
-            className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition duration-200"
+            onClick={showStudent ? handleCancel : () => setShowStudent(true)}
+            className="border hover:bg-blue-500 hover:text-white text-black font-medium px-4 py-2 rounded-md transition duration-200"
           >
             {showStudent ? "Cancel" : "Add Student"}
           </button>
@@ -61,7 +64,7 @@ function AddStudent({ students = [], group }) {
         {showStudent && (
           <div className="flex flex-col sm:flex-row sm:items-center gap-3">
             <select
-              className="flex-1 px-3 py-2 border rounded-md bg-zinc-800 text-white focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="flex-1 px-3 py-2 border rounded-md text-black focus:outline-none focus:ring-2 focus:ring-orange-500"
               value={selectedStudent}
               onChange={(e) => setSelectedStudent(e.target.value)}
             >
@@ -76,7 +79,7 @@ function AddStudent({ students = [], group }) {
             <button
               type="button"
               onClick={handleAddStudent}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded-md transition duration-200"
+              className="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded-md transition duration-200"
               disabled={!selectedStudent}
             >
               Add
@@ -84,10 +87,10 @@ function AddStudent({ students = [], group }) {
           </div>
         )}
 
-        {studentForm.students.length > 0 && (
+        {showStudent && studentForm.students.length > 0 && (
           <>
             <div>
-              <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+              <p className="text-sm font-medium text-gray-600 mb-2">
                 Assigned Students:
               </p>
               <div className="flex flex-wrap gap-2">

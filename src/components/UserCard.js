@@ -14,6 +14,7 @@ function UserCard({ user }) {
     password: user?.password,
     phone: user?.phone_number || "",
   });
+  const [showGroupDropdown, setShowGroupDropdown] = useState(false);
 
   const [formStateUpdate, formActionUpdate] = useActionState(updateUser, {});
   const [formStateDelete, formActionDelete] = useActionState(deleteUser, {});
@@ -22,67 +23,138 @@ function UserCard({ user }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const truncateText = (text, maxLength = 12) => {
+    if (!text) return "";
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+  };
+
+  const groups = Array.isArray(user?.groupName) ? user.groupName : [];
+
   return (
-    <div className="border rounded-2xl p-4 shadow-sm hover:shadow-md transition bg-white">
+    <div className="relative border rounded-lg p-4 bg-white w-[350px]">
       <form action={formActionUpdate}>
+        {/* Hidden Inputs */}
         <input type="hidden" name="originalUserId" value={user?.userId} />
         <input type="hidden" name="role" value={user?.role} />
         <input type="hidden" name="originalPhone" value={user?.phone_number} />
         <input type="hidden" name="originalPassword" value={user?.password} />
         <input type="hidden" name="originalFullName" value={user?.full_name} />
 
-        <p className="font-semibold text-lg text-gray-700">{user?.full_name}</p>
-        {isEdit && (
-          <EditInput
-            placeholder="Change User full Name"
-            name="fullName"
-            value={form.fullName}
-            onChange={handleChange}
-          />
-        )}
-
-        <p className="text-gray-600">📞 {user?.phone_number}</p>
-        {isEdit && (
-          <EditInput
-            placeholder="Change User phone number"
-            name="phone"
-            value={form.phone}
-            onChange={handleChange}
-          />
-        )}
-
-        <p className="text-gray-600">🆔 {user?.userId}</p>
-        {isEdit && (
-          <EditInput
-            placeholder="Change User userId"
-            name="userId"
-            value={form.userId}
-            onChange={handleChange}
-          />
-        )}
-
-        <p className="text-gray-500 text-sm break-all">🔐 {user?.password}</p>
-        {isEdit && (
-          <EditInput
-            placeholder="Change User password"
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-          />
-        )}
-
-        <div className="flex gap-2 mt-3">
-          <button
-            type="button"
-            onClick={() => setIsEdit((prev) => !prev)}
-            className="bg-blue-400 text-white text-sm rounded px-3 py-2 hover:bg-blue-500 transition"
-          >
-            {isEdit ? "Cancel" : "Edit"}
-          </button>
-
-          {isEdit && <SubmitButton title="Submit" titleUpdating="Editing..." />}
+        {/* Header */}
+        <div className="flex justify-between items-center gap-4">
+          <div className="flex items-center gap-1.5">
+            <div className="bg-black text-white font-bold rounded-full w-[40px] h-[40px] flex items-center justify-center">
+              <p className="text-3xl mb-2">{user?.role[0]}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-lg text-gray-700">
+                {form.fullName}
+              </p>
+              {isEdit && (
+                <EditInput
+                  placeholder="Change Full Name"
+                  name="fullName"
+                  value={form.fullName}
+                  onChange={handleChange}
+                />
+              )}
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setIsEdit((prev) => !prev)}
+              className="bg-blue-400 text-white text-sm rounded px-5 font-semibold py-1 hover:bg-blue-500 transition w-[50px] flex items-center justify-center"
+            >
+              {isEdit ? "Cancel" : "Edit"}
+            </button>
+            {isEdit && (
+              <SubmitButton title="Submit" titleUpdating="Editing..." />
+            )}
+          </div>
         </div>
 
+        {/* Grid Info */}
+        <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
+          {/* Phone Number */}
+          <div>
+            <label className="font-semibold">Phone Number</label>
+            <p className="text-gray-600 text-sm">{user?.phone_number}</p>
+            {isEdit && (
+              <EditInput
+                placeholder="Change Phone Number"
+                name="phone"
+                value={form.phone}
+                onChange={handleChange}
+              />
+            )}
+          </div>
+
+          {/* User ID */}
+          <div>
+            <label className="font-semibold">User ID</label>
+            <p className="text-gray-600 text-sm">
+              {truncateText(user?.userId)}
+            </p>
+            {isEdit && (
+              <EditInput
+                placeholder="Change User ID"
+                name="userId"
+                value={form.userId}
+                onChange={handleChange}
+              />
+            )}
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="font-semibold">Password</label>
+            <p className="text-gray-500 text-sm break-all">{user?.password}</p>
+            {isEdit && (
+              <EditInput
+                placeholder="Change Password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+              />
+            )}
+          </div>
+
+          {/* Group Dropdown */}
+          <div className="relative">
+            <label className="font-semibold">Group</label>
+            <div
+              className="flex items-center gap-1 w-fit cursor-pointer"
+              onClick={() => setShowGroupDropdown((prev) => !prev)}
+            >
+              <img
+                src="/SmallEnlargeArrow.svg"
+                alt="SmallArrow"
+                className={`mt-[1px] transition-transform duration-200 ${
+                  showGroupDropdown ? "rotate-90" : ""
+                }`}
+              />
+              <p className="text-gray-500 text-sm break-all">
+                {groups[0] || "None"}
+              </p>
+            </div>
+
+            {showGroupDropdown && groups.length > 0 && (
+              <div className="absolute top-full left-0 mt-2 max-h-40 overflow-y-auto bg-white shadow-lg border rounded-md w-48 z-20 text-left">
+                {groups.map((group, idx) => (
+                  <div
+                    key={idx}
+                    className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    {group}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Success / Error Message */}
         {formStateUpdate?.success && (
           <div className="text-green-500 mt-2">User updated successfully!</div>
         )}
@@ -91,20 +163,25 @@ function UserCard({ user }) {
         )}
       </form>
 
-      <form action={formActionDelete} className="mt-2">
-        <input type="hidden" name="userId" value={user?.userId} />
-        <input type="hidden" name="role" value={user?.role} />
-        <button className="bg-red-400 text-white text-sm rounded px-3 py-2 hover:bg-red-500 transition">
-          Delete
-        </button>
+      {/* Delete Button */}
+      <div className="w-full flex flex-row-reverse">
+        <form action={formActionDelete} className="mt-4">
+          <input type="hidden" name="userId" value={user?.userId} />
+          <input type="hidden" name="role" value={user?.role} />
+          <button className="bg-red-400 text-white text-sm rounded px-5 py-1 hover:bg-red-500 transition w-[50px] flex justify-center items-center font-semibold">
+            Delete
+          </button>
 
-        {formStateDelete?.success && (
-          <div className="text-green-500 mt-2">User deleted successfully!</div>
-        )}
-        {formStateDelete?.success === false && (
-          <div className="text-red-500 mt-2">Failed to delete user</div>
-        )}
-      </form>
+          {formStateDelete?.success && (
+            <div className="text-green-500 mt-2">
+              User deleted successfully!
+            </div>
+          )}
+          {formStateDelete?.success === false && (
+            <div className="text-red-500 mt-2">Failed to delete user</div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }
