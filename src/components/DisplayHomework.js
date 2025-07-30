@@ -10,15 +10,18 @@ function formatDate(dateString) {
 
 function DisplayHomework({ homeworkData }) {
   const { homework, submitted } = homeworkData;
+  const student = submitted?.[0];
+  console.log(student);
+  if (!student) return null;
 
   return (
-    <div className="border flex flex-col p-3 px-4 rounded-xl">
+    <div className="border flex flex-col p-3 px-4 rounded-xl w-[400px]">
       <div className="flex items-center justify-between">
         <h4 className="font-extralight text-2xl mb-1">
-          {submitted[0]?.studentName}
+          {student?.studentName || "No name"}
         </h4>
         <span className="bg-[#DDDCE3] text-gray-900 rounded-md px-3 py-1 text-sm font-medium">
-          {submitted[0]?.groupName}
+          {student?.groupName || "No group"}
         </span>
       </div>
 
@@ -27,13 +30,13 @@ function DisplayHomework({ homeworkData }) {
       <textarea
         disabled
         className="resize-none text-black bg-[#E6E6E6] rounded-lg p-2 h-[126px] overflow-scroll mb-3"
-        value={submitted[0]?.submission_text}
+        value={student?.submission_text || "No submission"}
       />
 
       <div className="flex justify-between items-center">
-        {submitted[0]?.fileUrl ? (
+        {student?.fileUrl ? (
           <a
-            href={submitted[0].fileUrl}
+            href={student.fileUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm border px-4 py-1 flex items-center justify-center rounded-3xl font-semibold cursor-pointer hover:bg-gray-200"

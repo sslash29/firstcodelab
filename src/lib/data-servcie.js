@@ -33,6 +33,8 @@ async function getGroups() {
     console.error("Error fetching groups:", groupError.message);
     return [];
   }
+  console.log("groups that you asked for");
+  console.dir(groups);
 
   // Fetch lookup tables
   const students = await fetchTable("student");
@@ -166,7 +168,8 @@ async function getStudentSession(studentId) {
 }
 
 async function getStudentHomework(studentId) {
-  const { data, error } = await supabase
+  // 1. Fetch all homework assignments for this student
+  const { data: assignments, error } = await supabase
     .from("homework_assignment")
     .select("*, homework:homework_id(*)")
     .eq("student_id", studentId);
@@ -176,10 +179,32 @@ async function getStudentHomework(studentId) {
     return [];
   }
 
-  return data;
+  const enriched = await Promise.all(
+    assignments.map(async (item) => {
+      let fileUrl = null;
+
+      if (item.submission_file) {
+        const { data: urlData, error: urlError } = supabase.storage
+          .from("homework-submissions")
+          .getPublicUrl(item.submission_file);
+
+        if (!urlError && urlData?.publicUrl) {
+          fileUrl = urlData.publicUrl;
+        }
+      }
+
+      return {
+        ...item,
+        fileUrl,
+      };
+    })
+  );
+
+  return enriched;
 }
 
 async function getHomeworkForInstructor(instructorId) {
+  // 1. Fetch all homework created by this instructor
   const { data: homeworks, error: homeworkError } = await supabase
     .from("homework")
     .select("*")
@@ -190,6 +215,9 @@ async function getHomeworkForInstructor(instructorId) {
     return [];
   }
 
+  if (!homeworks.length) return [];
+
+  // 2. Get all group assignments for this instructor
   const { data: groupAssignments, error: groupError } = await supabase
     .from("group_assignment")
     .select("group_id")
@@ -203,6 +231,7 @@ async function getHomeworkForInstructor(instructorId) {
   const groupIds = groupAssignments.map((g) => g.group_id);
   if (groupIds.length === 0) return [];
 
+  // 3. Get all students in those groups
   const { data: studentAssignments, error: studentError } = await supabase
     .from("group_assignment")
     .select("student_id, group_id")
@@ -217,13 +246,12 @@ async function getHomeworkForInstructor(instructorId) {
     return [];
   }
 
-  const studentIds = [...new Set(studentAssignments.map((s) => s.student_id))];
+  const studentIds = studentAssignments.map((s) => s.student_id);
   const studentGroupMap = Object.fromEntries(
     studentAssignments.map((s) => [s.student_id, s.group_id])
   );
 
-  if (studentIds.length === 0) return [];
-
+  // 4. Get student full names
   const { data: studentDetails, error: studentInfoError } = await supabase
     .from("student")
     .select("id, full_name")
@@ -238,6 +266,7 @@ async function getHomeworkForInstructor(instructorId) {
     (studentDetails || []).map((s) => [s.id, s.full_name])
   );
 
+  // 5. Get all homework assignments linked to this instructor's homework
   const { data: homeworkAssignments, error: haError } = await supabase
     .from("homework_assignment")
     .select("*")
@@ -252,6 +281,7 @@ async function getHomeworkForInstructor(instructorId) {
     return [];
   }
 
+  // 6. Get all group IDs involved in those assignments (for name mapping)
   const assignmentGroupIds = [
     ...new Set([
       ...homeworkAssignments.map((a) => a.group_id),
@@ -273,7 +303,9 @@ async function getHomeworkForInstructor(instructorId) {
     (groupData || []).map((g) => [g.id, g.name])
   );
 
+  // 7. Group homework data
   const submissionsByHomework = {};
+
   for (const hw of homeworks) {
     submissionsByHomework[hw.id] = {
       homework: hw,
@@ -281,13 +313,26 @@ async function getHomeworkForInstructor(instructorId) {
       notSubmitted: [],
     };
 
-    for (const studentId of studentIds) {
+    // 🔍 Find group_ids this homework was assigned to
+    const groupIdsAssignedToThisHomework = homeworkAssignments
+      .filter((ha) => ha.homework_id === hw.id)
+      .map((ha) => ha.group_id);
+
+    // 🔍 Find students in those groups
+    const studentsInThisHomework = studentAssignments.filter((s) =>
+      groupIdsAssignedToThisHomework.includes(s.group_id)
+    );
+
+    for (const { student_id, group_id } of studentsInThisHomework) {
       const submitted = homeworkAssignments.find(
-        (h) => h.homework_id === hw.id && h.student_id === studentId
+        (h) =>
+          h.homework_id === hw.id &&
+          h.student_id === student_id &&
+          h.group_id === group_id &&
+          h.submission_file !== null
       );
 
-      const groupId = submitted?.group_id || studentGroupMap[studentId] || null;
-      const groupName = groupId ? groupNameMap[groupId] || "Unknown" : null;
+      const groupName = group_id ? groupNameMap[group_id] || "Unknown" : null;
 
       let fileUrl = null;
       if (submitted?.submission_file) {
@@ -303,15 +348,15 @@ async function getHomeworkForInstructor(instructorId) {
       if (submitted) {
         submissionsByHomework[hw.id].submitted.push({
           ...submitted,
-          studentName: studentMap[studentId] || "Unknown",
+          studentName: studentMap[student_id] || "Unknown",
           groupName,
           fileUrl,
         });
       } else {
         submissionsByHomework[hw.id].notSubmitted.push({
-          student_id: studentId,
-          studentName: studentMap[studentId] || "Unknown",
-          groupId,
+          student_id,
+          studentName: studentMap[student_id] || "Unknown",
+          groupId: group_id,
           groupName,
         });
       }

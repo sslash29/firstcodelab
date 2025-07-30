@@ -5,7 +5,7 @@ async function page() {
   const groups = await getGroups();
 
   return (
-    <div>
+    <div className="bg-[#F2F2F2] h-dvh flex items-center justify-center">
       <SessionForm groups={groups} />
     </div>
   );

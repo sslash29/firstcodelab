@@ -3,6 +3,7 @@
 import { useState, useActionState } from "react";
 import SubmitButton from "./SubmitButton";
 import { createHomework } from "@/lib/actions/instructorAction"; // Make sure this exists
+import { useRouter } from "next/navigation";
 
 export default function HomeworkForm({ groupId }) {
   const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ export default function HomeworkForm({ groupId }) {
   });
 
   const [homeworkState, formAction] = useActionState(createHomework, {});
-
+  const router = useRouter();
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -21,9 +22,13 @@ export default function HomeworkForm({ groupId }) {
     }));
   };
 
+  if (homeworkState?.success === true) {
+    router.push("/instructor");
+  }
+
   return (
     <form
-      className="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 p-6 rounded-2xl shadow-md space-y-6 max-w-xl mx-auto"
+      className="bg-white border p-6 rounded-2xl text-black w-[500px]"
       action={formAction}
     >
       {/* Hidden instructor ID */}
@@ -34,16 +39,11 @@ export default function HomeworkForm({ groupId }) {
         readOnly
       />
 
-      <h2 className="text-xl font-semibold text-zinc-800 dark:text-zinc-200">
-        Create Homework
-      </h2>
+      <h2 className="text-2xl font-bold">Create Homework</h2>
 
       {/* End Time */}
       <div className="flex flex-col">
-        <label
-          htmlFor="end_time"
-          className="mb-1 font-medium text-zinc-700 dark:text-zinc-300"
-        >
+        <label htmlFor="end_time" className="mb-1 font-medium text-gray-500">
           Due Date
         </label>
         <input
@@ -53,7 +53,7 @@ export default function HomeworkForm({ groupId }) {
           value={formData.end_time}
           onChange={handleChange}
           required
-          className="rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white px-3 py-2"
+          className="rounded-md bg-[#DDDCE3] px-3 py-2 text-gray-900 "
         />
       </div>
 
@@ -61,7 +61,7 @@ export default function HomeworkForm({ groupId }) {
       <div className="flex flex-col">
         <label
           htmlFor="session_name"
-          className="mb-1 font-medium text-zinc-700 dark:text-zinc-300"
+          className="mb-1 font-medium text-gray-500"
         >
           Homework Name
         </label>
@@ -72,15 +72,15 @@ export default function HomeworkForm({ groupId }) {
           value={formData.session_name}
           onChange={handleChange}
           required
-          className="rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white px-3 py-2"
+          className="rounded-md bg-[#DDDCE3] px-3 py-2 text-gray-900 "
         />
       </div>
 
       {/* Homework Content */}
-      <div className="flex flex-col">
+      <div className="flex flex-col mb-6">
         <label
           htmlFor="session_content"
-          className="mb-1 font-medium text-zinc-700 dark:text-zinc-300"
+          className="mb-1 font-medium text-gray-500"
         >
           Homework Content
         </label>
@@ -91,7 +91,7 @@ export default function HomeworkForm({ groupId }) {
           onChange={handleChange}
           rows={4}
           required
-          className="rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white px-3 py-2 resize-none"
+          className="rounded-md bg-[#DDDCE3] px-3 py-2 text-gray-900 "
         />
       </div>
 

@@ -3,6 +3,7 @@
 import { useState, useActionState } from "react";
 import SubmitButton from "./SubmitButton";
 import { createSession } from "@/lib/actions/instructorAction";
+import Link from "next/link";
 
 export default function SessionForm({ groups }) {
   const [formData, setFormData] = useState({
@@ -40,7 +41,7 @@ export default function SessionForm({ groups }) {
 
   return (
     <form
-      className="bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 p-6 rounded-2xl shadow-md space-y-6 max-w-xl mx-auto"
+      className="bg-white border p-6 rounded-2xl text-black w-[500px]"
       action={formAction}
     >
       {/* Hidden instructor ID */}
@@ -51,16 +52,11 @@ export default function SessionForm({ groups }) {
         readOnly
       />
 
-      <h2 className="text-xl font-semibold text-zinc-800 dark:text-zinc-200">
-        Create New Session
-      </h2>
+      <h2 className="text-2xl font-bold">Create New Session</h2>
 
       {/* Start Time */}
       <div className="flex flex-col">
-        <label
-          htmlFor="start_time"
-          className="mb-1 font-medium text-zinc-700 dark:text-zinc-300"
-        >
+        <label htmlFor="start_time" className="mb-1 font-medium text-gray-500">
           Start Time
         </label>
         <input
@@ -70,16 +66,13 @@ export default function SessionForm({ groups }) {
           value={formData.start_time}
           onChange={handleChange}
           required
-          className="rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-md bg-[#DDDCE3] px-3 py-2 text-gray-900 "
         />
       </div>
 
       {/* End Time */}
       <div className="flex flex-col">
-        <label
-          htmlFor="end_time"
-          className="mb-1 font-medium text-zinc-700 dark:text-zinc-300"
-        >
+        <label htmlFor="end_time" className="mb-1 font-medium text-gray-500">
           End Time
         </label>
         <input
@@ -89,7 +82,7 @@ export default function SessionForm({ groups }) {
           value={formData.end_time}
           onChange={handleChange}
           required
-          className="rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-md bg-[#DDDCE3] px-3 py-2 text-gray-900 "
         />
       </div>
 
@@ -97,7 +90,7 @@ export default function SessionForm({ groups }) {
       <div className="flex flex-col">
         <label
           htmlFor="session_name"
-          className="mb-1 font-medium text-zinc-700 dark:text-zinc-300"
+          className="mb-1 font-medium text-gray-500"
         >
           Session Name
         </label>
@@ -108,7 +101,7 @@ export default function SessionForm({ groups }) {
           value={formData.session_name}
           onChange={handleChange}
           required
-          className="rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-md bg-[#DDDCE3] px-3 py-2 text-gray-900 "
         />
       </div>
 
@@ -116,7 +109,7 @@ export default function SessionForm({ groups }) {
       <div className="flex flex-col">
         <label
           htmlFor="session_content"
-          className="mb-1 font-medium text-zinc-700 dark:text-zinc-300"
+          className="mb-1 font-medium text-gray-500"
         >
           Session Content
         </label>
@@ -127,16 +120,13 @@ export default function SessionForm({ groups }) {
           onChange={handleChange}
           rows={4}
           required
-          className="rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+          className="rounded-md bg-[#DDDCE3] px-3 py-2 text-gray-900 "
         />
       </div>
 
       {/* Group Dropdown */}
-      <div className="flex flex-col">
-        <label
-          htmlFor="group_id"
-          className="mb-1 font-medium text-zinc-700 dark:text-zinc-300"
-        >
+      <div className="flex flex-col mb-6">
+        <label htmlFor="group_id" className="mb-1 font-medium text-gray-500">
           Assign to Group
         </label>
         <select
@@ -145,7 +135,7 @@ export default function SessionForm({ groups }) {
           value={formData.group_id}
           onChange={handleChange}
           required
-          className="rounded-md border border-zinc-300 dark:border-zinc-600 bg-zinc-50 dark:bg-zinc-800 text-zinc-900 dark:text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="rounded-md bg-[#DDDCE3] px-3 py-2 text-gray-900 "
         >
           <option value="">-- Select a Group --</option>
           {groups.map((group) => (
@@ -155,9 +145,12 @@ export default function SessionForm({ groups }) {
           ))}
         </select>
       </div>
-
-      {/* Submit Button */}
-      <SubmitButton />
+      <div className="flex items-center justify-between">
+        <SubmitButton />
+        <button className="text-sm border px-4 py-1 flex items-center justify-center rounded-3xl font-semibold cursor-pointer hover:bg-gray-200">
+          <Link href={"/instructor"}>Cancel</Link>
+        </button>
+      </div>
 
       {/* Client-side error */}
       {error && (
