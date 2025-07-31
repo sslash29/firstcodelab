@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 function Navbar() {
   return (
     <div className="flex items-center justify-between p-3 px-16 border-b">
@@ -21,7 +23,7 @@ function Navbar() {
       {/* Buttons */}
       <div className="flex items-center gap-6">
         <button className="px-6 py-2 cursor-pointer bg-[#35A7FF] text-white rounded-lg font-semibold text-lg hover:scale-90 transition-all">
-          log in
+          <Link href={"/login"}>log in</Link>
         </button>
         <button className="flex items-center justify-between text-[#35A7FF] font-bold cursor-pointer gap-1">
           <img src="/Language.svg" alt="worldIcon" />

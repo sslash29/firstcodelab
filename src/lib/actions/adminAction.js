@@ -1,6 +1,7 @@
 "use server";
 
 import { supabase } from "../supabase";
+import bcrypt from "bcrypt";
 
 async function addUser(prevState, queryData) {
   const fullName = queryData.get("fullName");
@@ -9,9 +10,12 @@ async function addUser(prevState, queryData) {
   const phone = queryData.get("phone");
   const role = queryData.get("role");
 
+  const hashedUserId = await bcrypt.hash(userId, 12);
+  const hashedPassword = await bcrypt.hash(password, 12);
+
   const { error } = await supabase.from(role).insert({
-    userId,
-    password,
+    userId: hashedUserId,
+    password: hashedPassword,
     full_name: fullName,
     role,
     ...(role !== "admin" && { phone_number: phone }),

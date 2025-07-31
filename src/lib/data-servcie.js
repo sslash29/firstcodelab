@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { supabase } from "./supabase";
 
 async function fetchTable(tableName) {
@@ -15,6 +16,17 @@ async function getUsers() {
   const students = await fetchTable("student");
 
   return { admins, instructors, students };
+}
+
+async function getUserGroups(userId, role) {
+  const { data, error } = await supabase
+    .from("group_assignment")
+    .select("*")
+    .eq(role === "Instructor" ? "instructor_id" : "student_id", userId);
+
+  if (error) throw new Error(JSON.stringify(error));
+
+  return data;
 }
 
 async function getGroups() {
@@ -147,7 +159,7 @@ async function getStudentSession(studentId) {
     .eq("student_id", studentId);
 
   if (assignmentError) {
-    throw new Error(assignmentError.message);
+    throw new Error(assignmentError.message, studentId);
   }
 
   const sessionIds = assignments.map((a) => a.session_id);
@@ -429,12 +441,28 @@ async function getUsersWithGroups() {
   };
 }
 
+function getCookies() {
+  const cookieStore = cookies();
+  const auth = cookieStore.get("auth");
+
+  if (!auth) return null;
+
+  try {
+    return JSON.parse(auth.value); // ✅ return the user object directly
+  } catch (err) {
+    console.error("Error parsing cookie:", err);
+    return null;
+  }
+}
+
 export {
   getUsers,
+  getUserGroups,
   getGroups,
   getInstructorSessionsWithGroups,
   getStudentSession,
   getStudentHomework,
   getUsersWithGroups,
   getHomeworkForInstructor,
+  getCookies,
 };
