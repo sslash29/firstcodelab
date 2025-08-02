@@ -1,4 +1,4 @@
-import DisplayGroup from "@/components/DisplayGroup";
+import GroupDisplayer from "@/components/GroupDisplayer";
 import { getGroups, getUsers } from "@/lib/data-servcie";
 import Link from "next/link";
 
@@ -14,18 +14,11 @@ export default async function Page() {
         </button>
       </Link>
 
-      {data && data.length > 0 ? (
-        data.map((group) => (
-          <DisplayGroup
-            key={group.id}
-            group={group}
-            instructors={instructors}
-            students={students}
-          />
-        ))
-      ) : (
-        <p className="text-gray-500">No groups found.</p>
-      )}
+      <GroupDisplayer
+        groups={data}
+        instructors={instructors}
+        students={students}
+      />
     </div>
   );
 }

@@ -32,7 +32,7 @@ function LogInForm() {
     if (loginState?.success && loginState?.user) {
       sessionStorage.setItem("user", JSON.stringify(loginState.user));
 
-      if (loginState.user.role === "admin") router.push("/admin");
+      if (loginState.user.role === "admin") router.push("/admin/add-user");
       if (loginState.user.role === "instructor") router.push("/instructor");
       if (loginState.user.role === "student") router.push("/student");
     }

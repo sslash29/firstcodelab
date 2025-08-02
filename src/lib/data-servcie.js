@@ -455,6 +455,63 @@ function getCookies() {
   }
 }
 
+async function getStudentsDataForInstructor(instructorId) {
+  // Step 1: Get all group_ids for the instructor
+  const { data: instructorGroups, error: groupError } = await supabase
+    .from("group_assignment")
+    .select("group_id")
+    .eq("instructor_id", instructorId);
+
+  if (groupError) throw new Error(JSON.stringify(groupError));
+
+  const groupIds = instructorGroups.map((g) => g.group_id);
+
+  if (groupIds.length === 0) return [];
+
+  // Step 2: Get all student_ids + group_id where group_id matches instructor's groups
+  const { data: studentAssignments, error: studentError } = await supabase
+    .from("group_assignment")
+    .select("student_id, group_id")
+    .in("group_id", groupIds)
+    .not("student_id", "is", null);
+
+  if (studentError) throw new Error(JSON.stringify(studentError));
+
+  const studentIds = [...new Set(studentAssignments.map((s) => s.student_id))];
+
+  // Step 3: Get student full_name
+  const { data: studentDetails, error: detailError } = await supabase
+    .from("student")
+    .select("id, full_name")
+    .in("id", studentIds);
+
+  if (detailError) throw new Error(JSON.stringify(detailError));
+
+  // Step 4: Get group names
+  const { data: groupDetails, error: groupNameError } = await supabase
+    .from("group")
+    .select("id, name")
+    .in("id", groupIds);
+
+  if (groupNameError) throw new Error(JSON.stringify(groupNameError));
+
+  // Step 5: Create lookup maps
+  const studentMap = Object.fromEntries(
+    studentDetails.map((s) => [s.id, s.full_name])
+  );
+  const groupMap = Object.fromEntries(groupDetails.map((g) => [g.id, g.name]));
+
+  // Step 6: Combine data
+  const result = studentAssignments.map(({ student_id, group_id }) => ({
+    student_id,
+    full_name: studentMap[student_id] || "Unknown",
+    group_id,
+    group_name: groupMap[group_id] || "Unknown",
+  }));
+
+  return result;
+}
+
 export {
   getUsers,
   getUserGroups,
@@ -463,6 +520,7 @@ export {
   getStudentSession,
   getStudentHomework,
   getUsersWithGroups,
+  getStudentsDataForInstructor,
   getHomeworkForInstructor,
   getCookies,
 };

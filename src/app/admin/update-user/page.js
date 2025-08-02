@@ -7,7 +7,6 @@ async function page() {
   const { admins, instructors, students } = await getUsersWithGroups();
 
   const allUsers = [
-    ...admins.map((u) => ({ ...u, role: "admin" })),
     ...instructors.map((u) => ({ ...u, role: "instructor" })),
     ...students.map((u) => ({ ...u, role: "student" })),
   ];

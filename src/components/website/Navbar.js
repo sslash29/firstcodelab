@@ -5,7 +5,9 @@ import Link from "next/link";
 function Navbar() {
   return (
     <div className="flex items-center justify-between p-3 px-16 border-b">
-      <h2 className="font-bold text-2xl">firstcodelab</h2>
+      <h2 className="font-bold text-2xl">
+        <Link href="/">firstcodelab</Link>
+      </h2>
 
       <div className="flex items-center gap-6 group">
         {["Courses", "Projects", "Pricing", "About", "Contact Us"].map(

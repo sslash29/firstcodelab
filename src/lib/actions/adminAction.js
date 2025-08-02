@@ -37,23 +37,18 @@ async function addUser(prevState, queryData) {
 
 async function updateUser(prevState, queryData) {
   const fullName = queryData.get("fullName");
-  const userId = queryData.get("userId");
-  const password = queryData.get("password");
   const phone = queryData.get("phone");
   const originalUserId = queryData.get("originalUserId");
   const role = queryData.get("role");
 
   // Original values as fallbacks
   const originalFullName = queryData.get("originalFullName");
-  const originalPassword = queryData.get("originalPassword");
   const originalPhone = queryData.get("originalPhone");
 
   const { error } = await supabase
     .from(role)
     .update({
-      userId: userId || originalUserId,
       full_name: fullName || originalFullName,
-      password: password || originalPassword,
       phone_number: phone || originalPhone,
     })
     .eq("userId", originalUserId);

@@ -24,7 +24,9 @@ function DisplayUser({ users = [], typeOfUser }) {
             <div className="flex justify-between w-full items-center">
               <h2 className="text-xl font-bold">{user.full_name}</h2>
               <span className="bg-black text-white px-2 py-1 text-sm rounded-md font-semibold">
-                {user?.groupName[0] || "None"}
+                {Array.isArray(user.groupName) && user.groupName.length > 0
+                  ? user.groupName[0]
+                  : "None"}
               </span>
             </div>
             <div className="flex items-center w-full gap-3">

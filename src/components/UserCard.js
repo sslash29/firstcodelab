@@ -90,36 +90,6 @@ function UserCard({ user }) {
             )}
           </div>
 
-          {/* User ID */}
-          <div>
-            <label className="font-semibold">User ID</label>
-            <p className="text-gray-600 text-sm">
-              {truncateText(user?.userId)}
-            </p>
-            {isEdit && (
-              <EditInput
-                placeholder="Change User ID"
-                name="userId"
-                value={form.userId}
-                onChange={handleChange}
-              />
-            )}
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="font-semibold">Password</label>
-            <p className="text-gray-500 text-sm break-all">{user?.password}</p>
-            {isEdit && (
-              <EditInput
-                placeholder="Change Password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-              />
-            )}
-          </div>
-
           {/* Group Dropdown */}
           <div className="relative">
             <label className="font-semibold">Group</label>

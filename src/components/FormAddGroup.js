@@ -5,7 +5,7 @@ import { useActionState } from "react";
 import SubmitButton from "./SubmitButton";
 import { addGroup } from "@/lib/actions/adminAction";
 
-function FormAddGroup({ instructors = [], students = [] }) {
+function FormAddGroup({ instructors = [], students = [], adminId }) {
   const [form, setForm] = useState({
     groupName: "",
     instructors: [],
@@ -46,11 +46,7 @@ function FormAddGroup({ instructors = [], students = [] }) {
         <div className="text-center font-bold text-5xl">Create Group</div>
 
         <form action={formAction} className="space-y-3 w-full">
-          <input
-            type="hidden"
-            name="adminId"
-            value="e980c315-d446-4c20-9a6c-e316f4024ecd"
-          />
+          <input type="hidden" name="adminId" value={adminId} />
           <input
             type="hidden"
             name="instructors"

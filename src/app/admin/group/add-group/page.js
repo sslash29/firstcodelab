@@ -1,11 +1,17 @@
 import FormAddGroup from "@/components/FormAddGroup";
-import { getUsers } from "@/lib/data-servcie";
+import { getCookies, getUsers } from "@/lib/data-servcie";
 
 async function page() {
   const { instructors, students } = await getUsers();
+  const { id, full_name, rating, role } = getCookies();
+
   return (
     <div>
-      <FormAddGroup instructors={instructors} students={students} />
+      <FormAddGroup
+        instructors={instructors}
+        students={students}
+        adminId={id}
+      />
     </div>
   );
 }
