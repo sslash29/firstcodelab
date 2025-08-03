@@ -4,7 +4,6 @@ const PUBLIC_PATHS = ["/login", "/"];
 
 export function middleware(request) {
   const authCookie = request.cookies.get("auth")?.value;
-  console.log(authCookie);
   const isPublic = PUBLIC_PATHS.some((path) =>
     request.nextUrl.pathname.startsWith(path)
   );

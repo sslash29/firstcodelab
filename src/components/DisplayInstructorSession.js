@@ -30,7 +30,6 @@ export default function DisplayInstructorSession({ session, type }) {
     new Date(session.start_time),
     "HH:mm"
   )} – ${format(new Date(session.end_time), "HH:mm")}`;
-  console.log(session);
   return (
     <div
       className="absolute left-20 w-4/5"

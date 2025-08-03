@@ -11,7 +11,6 @@ function formatDate(dateString) {
 function DisplayHomework({ homeworkData }) {
   const { homework, submitted } = homeworkData;
   const student = submitted?.[0];
-  console.log(student);
   if (!student) return null;
 
   return (

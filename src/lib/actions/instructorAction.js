@@ -174,7 +174,6 @@ async function rateStudent(prevState, formData) {
   const submission = Number(formData.get("submission"));
   const punctuality = Number(formData.get("punctuality"));
   const rating = { participation, submission, punctuality };
-  console.log(rating, formData);
 
   const { data, error } = await supabase
     .from("student")

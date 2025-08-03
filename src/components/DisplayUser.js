@@ -14,8 +14,6 @@ function DisplayUser({ users = [], typeOfUser }) {
     <div className="flex flex-col">
       <div className="flex flex-col gap-2.5 mt-2.5 overflow-y-scroll">
         {users.map((user, index) => {
-          console.log(user);
-
           return (
             <div
               key={index}

@@ -45,8 +45,6 @@ async function getGroups() {
     console.error("Error fetching groups:", groupError.message);
     return [];
   }
-  console.log("groups that you asked for");
-  console.dir(groups);
 
   // Fetch lookup tables
   const students = await fetchTable("student");
