@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import DisplayGroup from "./DisplayGroup";
-import SearchBarForGroups from "./SearchBarForGroups";
+import SearchBar from "./SearchBar";
 
 function GroupDisplayer({ groups, instructors, students }) {
   const [searchValue, setSearchValue] = useState("");
@@ -17,10 +17,7 @@ function GroupDisplayer({ groups, instructors, students }) {
 
   return (
     <div className="flex flex-col">
-      <SearchBarForGroups
-        searchValue={searchValue}
-        setSearchValue={setSearchValue}
-      />
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
       <div className="flex gap-1.5 ">
         {groupsData && groupsData.length > 0 ? (
           groupsData.map((group) => (

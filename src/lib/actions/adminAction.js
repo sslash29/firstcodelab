@@ -38,7 +38,7 @@ async function addUser(prevState, queryData) {
 async function updateUser(prevState, queryData) {
   const fullName = queryData.get("fullName");
   const phone = queryData.get("phone");
-  const originalUserId = queryData.get("originalUserId");
+  const originalId = queryData.get("originalId");
   const role = queryData.get("role");
 
   // Original values as fallbacks
@@ -51,7 +51,7 @@ async function updateUser(prevState, queryData) {
       full_name: fullName || originalFullName,
       phone_number: phone || originalPhone,
     })
-    .eq("userId", originalUserId);
+    .eq("id", originalId);
 
   if (error) {
     console.error("Update Error:", error);
@@ -66,30 +66,136 @@ async function updateUser(prevState, queryData) {
     message: "User updated successfully",
   };
 }
+
 async function deleteUser(prevState, queryData) {
-  const userId = queryData.get("userId");
+  const originalId = queryData.get("originalId");
   const role = queryData.get("role");
 
-  if (role === "main-admin")
+  if (!originalId || !role) {
+    return {
+      success: false,
+      message: "Missing required data (ID or role)",
+    };
+  }
+
+  if (role === "main-admin") {
     return {
       success: false,
       message: "Can't delete main admin",
     };
-
-  const { error } = await supabase.from(role).delete().eq("userId", userId);
-
-  if (error) {
-    console.error("Delete Error:", error);
-    return {
-      success: false,
-      message: error.message || "Unknown error",
-    };
   }
 
-  return {
-    success: true,
-    message: "User deleted successfully",
-  };
+  try {
+    const column = role === "student" ? "student_id" : "instructor_id";
+
+    // 1. Delete from group_assignment
+    const { error: groupError } = await supabase
+      .from("group_assignment")
+      .delete()
+      .eq(column, originalId);
+
+    if (groupError) {
+      console.error("Group deletion error:", groupError);
+      return {
+        success: false,
+        message: "Error deleting from group_assignment",
+      };
+    }
+
+    // 2. Student-specific deletion
+    if (role === "student") {
+      const { error: homeworkError } = await supabase
+        .from("homework_assignment")
+        .delete()
+        .eq("student_id", originalId);
+
+      if (homeworkError) {
+        console.error("Student homework deletion error:", homeworkError);
+        return {
+          success: false,
+          message: "Error deleting student homework assignments",
+        };
+      }
+    }
+
+    // 3. Instructor-specific deletion
+    if (role === "instructor") {
+      const { data: instructorHomeworks, error: homeworkSelectErr } =
+        await supabase
+          .from("homework")
+          .select("id")
+          .eq("instructor_id", originalId);
+
+      if (homeworkSelectErr) {
+        console.error(
+          "Fetching instructor homework IDs failed:",
+          homeworkSelectErr
+        );
+        return {
+          success: false,
+          message: "Failed to retrieve instructor homework data",
+        };
+      }
+
+      const homeworkIds = instructorHomeworks.map((hw) => hw.id);
+
+      if (homeworkIds.length > 0) {
+        const { error: hwAssignDelErr } = await supabase
+          .from("homework_assignement")
+          .delete()
+          .in("homework_id", homeworkIds);
+
+        if (hwAssignDelErr) {
+          console.error(
+            "Deleting instructor's assigned homework failed:",
+            hwAssignDelErr
+          );
+          return {
+            success: false,
+            message: "Failed to delete homework assignments for instructor",
+          };
+        }
+
+        const { error: hwDeleteErr } = await supabase
+          .from("homework")
+          .delete()
+          .in("id", homeworkIds);
+
+        if (hwDeleteErr) {
+          console.error("Deleting instructor homeworks failed:", hwDeleteErr);
+          return {
+            success: false,
+            message: "Failed to delete instructor homework entries",
+          };
+        }
+      }
+    }
+
+    // 4. Finally, delete from user table
+    const { error: userDeleteError } = await supabase
+      .from(role)
+      .delete()
+      .eq("id", originalId);
+
+    if (userDeleteError) {
+      console.error("Final user deletion failed:", userDeleteError);
+      return {
+        success: false,
+        message: "Failed to delete user from main table",
+      };
+    }
+
+    return {
+      success: true,
+      message: "User deleted successfully",
+    };
+  } catch (err) {
+    console.error("Unexpected error during deletion:", err);
+    return {
+      success: false,
+      message: "Unexpected error occurred during deletion",
+    };
+  }
 }
 
 async function addGroup(prevState, formData) {

@@ -1,16 +1,34 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import UserCard from "./UserCard";
+import SearchBar from "./SearchBar";
 
 function DisplayUsers({ users = [] }) {
+  const [searchValue, setSearchValue] = useState("");
+  const [userData, setUserData] = useState(users);
+  useEffect(() => {
+    const filtered = users.filter((user) =>
+      user.full_name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    setUserData(filtered);
+  }, [searchValue, users]);
+  console.log(searchValue);
   return (
-    <div className="p-6 max-w-screen-xl mx-auto">
-      <div className="flex flex-wrap gap-6 justify-start">
-        {users.map((user, index) => (
-          <div key={index} className="w-full sm:w-[48%] lg:w-[30%]">
-            <UserCard user={user} />
-          </div>
-        ))}
+    <div className="flex flex-col">
+      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
+      <div className="p-6 max-w-screen-xl mx-auto">
+        <div className="flex flex-wrap gap-6 ">
+          {userData && userData.length > 0 ? (
+            userData.map((user, index) => (
+              <div key={index}>
+                <UserCard user={user} />
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No Users found.</p>
+          )}
+        </div>
       </div>
     </div>
   );

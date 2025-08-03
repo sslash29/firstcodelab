@@ -10,9 +10,8 @@ function UserCard({ user }) {
   const [isEdit, setIsEdit] = useState(false);
   const [form, setForm] = useState({
     fullName: user?.full_name,
-    userId: user?.userId,
-    password: user?.password,
     phone: user?.phone_number || "",
+    id: user?.id,
   });
   const [showGroupDropdown, setShowGroupDropdown] = useState(false);
 
@@ -34,11 +33,10 @@ function UserCard({ user }) {
     <div className="relative border rounded-lg p-4 bg-white w-[350px]">
       <form action={formActionUpdate}>
         {/* Hidden Inputs */}
-        <input type="hidden" name="originalUserId" value={user?.userId} />
         <input type="hidden" name="role" value={user?.role} />
         <input type="hidden" name="originalPhone" value={user?.phone_number} />
-        <input type="hidden" name="originalPassword" value={user?.password} />
         <input type="hidden" name="originalFullName" value={user?.full_name} />
+        <input type="hidden" name="originalId" value={user?.id} />
 
         {/* Header */}
         <div className="flex justify-between items-center gap-4">
@@ -48,7 +46,7 @@ function UserCard({ user }) {
             </div>
             <div>
               <p className="font-semibold text-lg text-gray-700">
-                {form.fullName}
+                {user?.full_name}
               </p>
               {isEdit && (
                 <EditInput
@@ -136,7 +134,7 @@ function UserCard({ user }) {
       {/* Delete Button */}
       <div className="w-full flex flex-row-reverse">
         <form action={formActionDelete} className="mt-4">
-          <input type="hidden" name="userId" value={user?.userId} />
+          <input type="hidden" name="originalId" value={user?.id} />
           <input type="hidden" name="role" value={user?.role} />
           <button className="bg-red-400 text-white text-sm rounded px-5 py-1 hover:bg-red-500 transition w-[50px] flex justify-center items-center font-semibold">
             Delete
