@@ -13,7 +13,6 @@ function DisplayUsers({ users = [] }) {
     );
     setUserData(filtered);
   }, [searchValue, users]);
-  console.log(searchValue);
   return (
     <div className="flex flex-col">
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
