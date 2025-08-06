@@ -17,12 +17,7 @@ function Footer() {
           <h4 className="font-semibold mb-3">Company</h4>
           <ul className="space-y-2 text-sm text-gray-400">
             <li>
-              <a href="#" className="hover:text-white">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a href="#" className="hover:text-white">
+              <a href="https://wa.me/01278953422" className="hover:text-white">
                 Whatsapp
               </a>
             </li>
@@ -32,9 +27,7 @@ function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-white">
-                +201022019872
-              </a>
+              <a href="#">+201278953422</a>
             </li>
           </ul>
         </div>

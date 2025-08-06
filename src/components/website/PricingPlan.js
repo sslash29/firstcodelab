@@ -13,29 +13,24 @@ function PricingPlan() {
         <PricingCard />
         <PricingCard
           planName="Gold"
-          price={500}
+          price={1000}
           isPopular={true}
           features={[
-            "When I am up they gonne hate",
-            "When I am down they gonna set me straight",
-            "Best App of all time",
-            "Frank Ocean the best musician",
-            "Frank Ocean the best musician",
-            "Frank Ocean the best musician",
+            "Personalized 1:1 Course with Instructor",
+            "Choose The Path You Want to follow",
+            "We Can Create a custom plan for you",
+            "12/7 Chat Support for Any Issues",
           ]}
         />
         <PricingCard
-          planName="Elite"
-          price={2000}
+          planName="Custom"
+          price={"1000+"}
           features={[
-            "When I am up they gonne hate",
-            "When I am down they gonna set me straight",
-            "Best App of all time",
-            "Frank Ocean the best musician",
-            "Frank Ocean the best musician",
-            "Frank Ocean the best musician",
-            "When I am down they gonna set me straight",
-            "When I am up they gonne hate",
+            "Personalized 1:1 Course with Instructor",
+            "Personalized Time of each session",
+            "24/7 Chat Support for Any Issues",
+            "Customizable Curriculum (based on skill level or goals)",
+            "Dedicated Instructor (Mentor)",
           ]}
         />
       </div>

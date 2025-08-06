@@ -34,12 +34,12 @@ function Landing() {
         </div>
       </div>
 
-      <div className="flex items-center gap-3 ">
+      <div className="flex items-center gap-3 translate-y-3">
         <StarSectionData firstText="We Are Best" secondText="Teaching" />
         <StarSectionData firstText="We Are Best" secondText="Mastering" />
         <StarSectionData firstText="We Are Best" secondText="Teaching" />
         <StarSectionData firstText="We Are Best" secondText="Mastering" />
-        <div className="flex items-center gap-1">
+        <div className="flex items-center ">
           <img src="/SmallStar.svg" alt="Star" />
           <p>We Are Best</p>
           <div className="w-[88px] h-[0.5px] bg-black mx-1.5" />

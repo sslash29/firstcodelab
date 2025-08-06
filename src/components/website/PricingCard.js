@@ -4,12 +4,11 @@ import BulletPoint from "./BulletPoint";
 
 function PricingCard({
   planName = "Silver",
-  price = 200,
+  price = 800,
   features = [
-    "When I am up they gonne hate",
-    "When I am down they gonna set me straight",
-    "Best App of all time",
-    "Frank Ocean the best musician",
+    "In a Group of the least amount is 4",
+    "Choose The Path You Want to follow",
+    "We Can Create a custom plan for you",
   ],
   isPopular = false,
 }) {
@@ -35,7 +34,9 @@ function PricingCard({
 
       {/* Button */}
       <button className="font-bold px-4 py-2 flex items-center justify-center rounded-lg bg-[#DDDDE3]">
-        Get Started
+        <a href="https://wa.me/01278953422" target="_blank">
+          Get Started
+        </a>
       </button>
       <div className="w-[408px] h-[0.8px] bg-black absolute top-[162px] right-0"></div>
       {/* Feature List (Flexible Scrollable) */}
