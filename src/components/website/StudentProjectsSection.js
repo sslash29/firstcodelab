@@ -10,21 +10,43 @@ export default function ProjectGrid() {
         <Image
           src="/SwipeProject.png"
           alt="img"
-          className="rounded-lg border w-[680px] h-[470px]"
+          width={680}
+          height={470}
+          className="rounded-lg"
         />
       </div>
       <div className="flex gap-5 flex-col gap-y-10 w-[610px] ">
         <div className="w-[300px] flex gap-5 h-fit ">
-          <Image src="/pepsi.png" alt="img" className="rounded-lg border" />
-          <Image src="/pizzaria.png" alt="img" className="rounded-lg border" />
+          <Image
+            src="/pepsi.png"
+            alt="img"
+            className="rounded-lg"
+            width={300}
+            height={215}
+          />
+          <Image
+            src="/pizzaria.png"
+            alt="img"
+            className="rounded-lg "
+            width={300}
+            height={215}
+          />
         </div>
         <div className="w-[300px] flex gap-5 h-fit ">
           <Image
             src="/portofolio.png"
             alt="img"
-            className="rounded-lg border"
+            className="rounded-lg "
+            width={300}
+            height={215}
           />
-          <Image src="/album.png" alt="img" className="rounded-lg border" />
+          <Image
+            src="/album.png"
+            alt="img"
+            width={300}
+            height={215}
+            className="rounded-lg "
+          />
         </div>
       </div>
     </div>
