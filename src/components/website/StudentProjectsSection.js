@@ -8,7 +8,7 @@ export default function ProjectGrid() {
     >
       <div className="w-fit">
         <Image
-          src="public/SwipeProject.png"
+          src="/SwipeProject.png"
           alt="img"
           width={680}
           height={470}
@@ -18,14 +18,14 @@ export default function ProjectGrid() {
       <div className="flex gap-5 flex-col gap-y-10 w-[610px] ">
         <div className="w-[300px] flex gap-5 h-fit ">
           <Image
-            src="public/pepsi.png"
+            src="/pepsi.png"
             alt="img"
             className="rounded-lg"
             width={300}
             height={215}
           />
           <Image
-            src="public/pizzaria.png"
+            src="/pizzaria.png"
             alt="img"
             className="rounded-lg "
             width={300}
@@ -34,14 +34,14 @@ export default function ProjectGrid() {
         </div>
         <div className="w-[300px] flex gap-5 h-fit ">
           <Image
-            src="public/portofolio.png"
+            src="/portofolio.png"
             alt="img"
             className="rounded-lg "
             width={300}
             height={215}
           />
           <Image
-            src="public/album.png"
+            src="/album.png"
             alt="img"
             width={300}
             height={215}
