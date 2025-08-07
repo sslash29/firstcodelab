@@ -5,16 +5,17 @@ import StarSectionData from "./StarSectionData";
 function Landing() {
   return (
     <div
-      className="px-16 min-h-[calc(100vh-70px)] bg-cover bg-center flex flex-col"
+      className="px-16 min-h-[calc(100vh-70px)] bg-cover bg-center flex flex-col max-sm:px-6"
       style={{ backgroundImage: 'url("/Grid.png")' }}
     >
-      <div className="h-[500px] flex items-center  gap-16">
-        <div className="flex flex-col ">
-          <h1 className="text-5xl font-bold w-[745px]">
-            Empowering the Next Generation of
+      <div className="h-[500px] flex items-center gap-16 max-sm:gap-4 max-sm:justify-center">
+        <div className="flex flex-col max-sm:mt-20">
+          <h1 className="text-5xl font-bold w-[745px] max-sm:text-4xl max-sm:w-[329px] flex items-center flex-col">
+            Empowering the
+            <span>Next Generation of</span>
             <span className="text-[#35A7FF]"> [ ...Developers... ]</span>
           </h1>
-          <div className="mx-4 mt-4 flex flex-col gap-3.5">
+          <div className="mx-4 mt-4 flex flex-col gap-3.5 ">
             <BulletPoint>1 : 1 Online Classes For All Ages</BulletPoint>
             <BulletPoint>High Quality, Cheap Prices</BulletPoint>
             <BulletPoint>
@@ -23,7 +24,7 @@ function Landing() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-20 ">
+        <div className="flex flex-col gap-20 max-sm:hidden ">
           <h2 className="w-[412px] text-2xl font-semibold">
             Start Coding by choosing your own path, Creating Games, Website and
             much more...
@@ -34,7 +35,7 @@ function Landing() {
         </div>
       </div>
 
-      <div className="flex items-center gap-3 translate-y-3">
+      <div className="flex items-center gap-3 translate-y-3 max-sm:hidden">
         <StarSectionData firstText="We Are Best" secondText="Teaching" />
         <StarSectionData firstText="We Are Best" secondText="Mastering" />
         <StarSectionData firstText="We Are Best" secondText="Teaching" />
@@ -46,23 +47,25 @@ function Landing() {
           <img src="/SmallStar.svg" alt="Star" />
         </div>
       </div>
-      <div className="flex items-center justify-between bg-[#DDDCE3] rounded-lg w-full p-2 h-[230px] px-20 mt-10">
-        <div className="flex items-center gap-10">
-          <img src="/BigStar.svg" alt="Star" />
-          <h2 className="w-[273px] text-5xl font-bold">Join A Big Community</h2>
+      <div className="flex items-center justify-between bg-[#DDDCE3] rounded-lg w-full p-2 h-[230px] px-20 mt-10 max-sm:px-5 max-sm:flex-col max-sm:py-10 max-sm:h-fit max-sm:gap-10">
+        <div className="flex items-center gap-10 max-sm:gap-4 max-sm:justify-center">
+          <img src="/BigStar.svg" alt="Star" className="max-sm:scale-80" />
+          <h2 className="w-[273px] text-5xl font-bold max-sm:text-3xl ">
+            Join A Big Community
+          </h2>
         </div>
-        <div className="flex gap-5 mr-40">
-          <div className="flex flex-col items-center ">
-            <h3 className="font-bold text-[40px]">40K</h3>
-            <p className="text-[20px]">Students</p>
+        <div className="flex gap-5 mr-40 max-sm:flex-col max-sm:mr-0">
+          <div className="flex flex-col items-center">
+            <h3 className="font-bold text-[40px] max-sm:text-5xl">40K</h3>
+            <p className="text-[20px] max-sm:text-2xl">Students</p>
           </div>
           <div className="flex flex-col items-center">
-            <h3 className="font-bold text-[40px]">90+</h3>
-            <p className="text-[20px]">Countries</p>
+            <h3 className="font-bold text-[40px] max-sm:text-5xl">90+</h3>
+            <p className="text-[20px] max-sm:text-2xl">Countries</p>
           </div>
           <div className="flex flex-col items-center">
-            <h3 className="font-bold text-[40px]">15+</h3>
-            <p className="text-[20px]">Courses</p>
+            <h3 className="font-bold text-[40px] max-sm:text-5xl">15+</h3>
+            <p className="text-[20px] max-sm:text-2xl">Courses</p>
           </div>
         </div>
       </div>

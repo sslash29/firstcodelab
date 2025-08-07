@@ -13,7 +13,7 @@ function PricingCard({
   isPopular = false,
 }) {
   return (
-    <div className="flex flex-col border py-2 px-4 rounded-lg w-[409px] h-[600px] bg-white relative">
+    <div className="flex flex-col border py-2 px-4 rounded-lg w-full sm:w-[409px] h-auto sm:h-[600px] bg-white">
       {/* Header */}
       {!isPopular ? (
         <span className="font-semibold mt-2 mb-2">{planName} Plan</span>
@@ -28,19 +28,19 @@ function PricingCard({
 
       {/* Price */}
       <div className="flex mb-4">
-        <h3 className="text-4xl font-bold">EGP{price}</h3>
+        <h3 className="text-3xl sm:text-4xl font-bold">EGP{price}</h3>
         <span className=" font-light self-end">per month</span>
       </div>
 
       {/* Button */}
-      <button className="font-bold px-4 py-2 flex items-center justify-center rounded-lg bg-[#DDDDE3]">
+      <button className="font-bold px-4 py-2 flex items-center justify-center rounded-lg bg-[#DDDDE3] w-full">
         <a href="https://wa.me/01278953422" target="_blank">
           Get Started
         </a>
       </button>
-      <div className="w-[408px] h-[0.8px] bg-black absolute top-[162px] right-0"></div>
+      <hr className="my-6 border-black/20" />
       {/* Feature List (Flexible Scrollable) */}
-      <div className="flex flex-col gap-3 mt-10 flex-1 overflow-y-auto">
+      <div className="flex flex-col gap-3 flex-1 overflow-y-auto">
         <h4 className="font-bold ml-1">FEATURES</h4>
         <div className="px-4 flex flex-col gap-3.5">
           {features.map((feature, key) => (

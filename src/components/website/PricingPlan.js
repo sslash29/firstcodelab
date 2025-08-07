@@ -4,12 +4,12 @@ import PricingCard from "./PricingCard";
 
 function PricingPlan() {
   return (
-    <div className="px-16 flex flex-col gap-15">
-      <div className="font-bold text-4xl">
+    <div className="px-4 sm:px-16 flex flex-col gap-10 sm:gap-16">
+      <div className="font-bold text-3xl sm:text-4xl">
         <h2 className="text-center">We’ve got the plan that’s </h2>
-        <h2 className="text-center">Perfect For Your </h2>
+        <h2 className="text-center">Perfect For You</h2>
       </div>
-      <div className="flex gap-5">
+      <div className="flex flex-col sm:flex-row gap-5">
         <PricingCard />
         <PricingCard
           planName="Gold"

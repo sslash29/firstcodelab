@@ -2,20 +2,28 @@
 
 function CodingLanguagesBar() {
   return (
-    <div className="flex gap-30 px-16 items-center ">
+    <div className="flex flex-col sm:flex-row gap-8 sm:gap-30 px-4 sm:px-16 items-center">
       <div>
-        <h2 className="text-4xl w-[377px] text-[#767676]">
+        <h2 className="text-2xl sm:text-4xl w-full sm:w-[377px] text-[#767676] text-center sm:text-left">
           learn coding with{" "}
           <span className="text-black font-bold">any langauge</span> you choose
         </h2>
       </div>
-      <div className="flex items-center justify-between w-full">
-        <img src="/PythonSmall.svg" alt="Python" />
-        <img src="/JSsmall.svg" alt="JS" />
-        <img src="/C.svg" alt="C" />
-        <img src="/Cpp.svg" alt="C++" />
-        <img src="/DartSmall.svg" alt="Dart" />
-        <img src="/TypescriptSmall.svg" alt="Dart" />
+      <div className="grid grid-cols-3 gap-4 place-items-center sm:flex sm:items-center sm:justify-between w-full">
+        <img
+          src="/PythonSmall.svg"
+          alt="Python"
+          className="w-[55px] h-[55px]"
+        />
+        <img src="/JSsmall.svg" alt="JS" className="w-[55px] h-[55px]" />
+        <img src="/C.svg" alt="C" className="w-[55px] h-[55px]" />
+        <img src="/Cpp.svg" alt="C++" className="w-[55px] h-[55px]" />
+        <img src="/DartSmall.svg" alt="Dart" className="w-[55px] h-[55px]" />
+        <img
+          src="/TypescriptSmall.svg"
+          alt="TypeScript"
+          className="w-[55px] h-[55px]"
+        />
       </div>
     </div>
   );
