@@ -10,19 +10,19 @@ import DisplayUser from "@/components/DisplayUser";
 import CalendarNav from "@/components/CalendarNav";
 
 async function Page() {
-  const { id, full_name, rating, role } = getCookies();
+  const { id, full_name, role } = getCookies();
   const sessions = await getStudentSession(id);
   const homeworkData = await getStudentHomework(id);
   const groups = await getUserGroups(id, role);
   const { instructors } = await getUsersWithGroups();
 
   return (
-    <div className="flex bg-[#f2f2f2]">
-      <div className="flex flex-col border-r h-dvh w-[350px]">
+    <div className="flex flex-col bg-[#f2f2f2] md:flex-row">
+      <div className="flex flex-col border-r h-auto md:h-dvh w-full md:w-[350px]">
         <div className="flex flex-col p-4 py-6 gap-10 w-full ">
           <div className="flex items-center gap-1.5">
             <div className="bg-black text-white font-bold rounded-full w-[40px] h-[40px] flex items-center justify-center text-2xl">
-              <p className="mb-0.5">I</p>
+              <p className="mb-0.5">S</p>
             </div>
             <p className="text-3xl font-semibold">{full_name}</p>
           </div>
@@ -35,7 +35,7 @@ async function Page() {
           <DisplayUser users={instructors} typeOfUser="instructor" />
         </div>
       </div>
-      <div className="flex flex-col p-4 py-6 gap-10 items-center w-[700px] border-r">
+      <div className="flex flex-col p-4 py-6 gap-10 items-center w-full md:w-[700px] border-r">
         {!homeworkData || homeworkData.length === 0 ? (
           <h2 className="text-4xl font-bold h-dvh flex items-center justify-center ">
             No Homework
@@ -44,7 +44,7 @@ async function Page() {
           <DisplayStudentHomework data={homeworkData} />
         )}
       </div>
-      <div className="flex flex-col gap-10 items-center w-[600px]">
+      <div className="flex flex-col gap-10 items-center w-full md:w-[600px]">
         <CalendarNav sessions={sessions} type={"student"} />
       </div>
     </div>

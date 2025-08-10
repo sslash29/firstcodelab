@@ -29,24 +29,25 @@ function DisplayStudentHomework({ data }) {
   });
 
   return (
-    <div className="space-y-6 px-6">
-      <div className="flex justify-between items-center">
-        <h2 className="font-semibold text-4xl">Homework</h2>
-        <div className="relative">
+    <div className="space-y-6 px-4 sm:px-6 w-full">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <h2 className="font-semibold text-2xl sm:text-4xl">Homework</h2>
+        <div className="relative w-full sm:w-auto">
           <button
-            className="border font-regular flex items-center text-xl rounded-xl px-4 gap-2"
+            className="w-full sm:w-auto border font-regular flex items-center justify-between sm:justify-center text-base sm:text-xl rounded-xl px-4 py-2 gap-2"
             onClick={toggleFilterDropdown}
           >
-            {selectedFilter === "submitted" ? "Submitted" : "Not Submitted"}
+            <span>
+              {selectedFilter === "submitted" ? "Submitted" : "Not Submitted"}
+            </span>
             <img
               src="/SmallEnlargeArrow.svg"
               alt="Arrow"
-              className={`scale-150 mt-0.5 transition-transform ${
+              className={`scale-125 sm:scale-150 mt-0.5 transition-transform ${
                 isFilterOpen ? "rotate-270" : "rotate-90"
               }`}
             />
           </button>
-
           {isFilterOpen && (
             <div className="absolute bg-white border mt-2 rounded-xl shadow-md w-full z-10">
               <button
@@ -82,17 +83,17 @@ function DisplayStudentHomework({ data }) {
           <form
             key={id}
             action={formAction}
-            className="border rounded-xl p-4 shadow space-y-3 bg-white"
+            className="border rounded-xl p-4 sm:p-5 shadow space-y-3 sm:space-y-4 bg-white w-full"
           >
             <input type="hidden" name="assignment_id" value={id} />
 
             {isSubmitted ? (
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-xl font-semibold text-gray-800">
+                  <h3 className="text-lg sm:text-xl font-semibold text-gray-800">
                     {hw.title}
                   </h3>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-xs sm:text-sm text-gray-500">
                     {new Date(hw.due_date).toLocaleDateString("en-US", {
                       day: "2-digit",
                       month: "short",
@@ -107,18 +108,18 @@ function DisplayStudentHomework({ data }) {
                   value={assignment.submission_text || "No submission"}
                 />
 
-                <div className="flex justify-between items-center gap-2.5">
+                <div className="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center gap-3 sm:gap-2.5">
                   {assignment.fileUrl ? (
                     <a
                       href={assignment.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm border px-4 py-1 rounded-3xl font-semibold hover:bg-gray-200"
+                      className="text-xs sm:text-sm border px-4 py-1 rounded-3xl font-semibold hover:bg-gray-200"
                     >
                       View Homework
                     </a>
                   ) : (
-                    <span className="text-sm text-gray-400">
+                    <span className="text-xs sm:text-sm text-gray-400">
                       No file uploaded
                     </span>
                   )}
@@ -126,7 +127,7 @@ function DisplayStudentHomework({ data }) {
                   <button
                     type="button"
                     disabled
-                    className="px-4 py-1 bg-gray-400 text-white rounded cursor-not-allowed"
+                    className="px-4 py-1 bg-gray-400 text-white rounded cursor-not-allowed w-full sm:w-auto text-sm"
                   >
                     Already Submitted
                   </button>
@@ -134,13 +135,13 @@ function DisplayStudentHomework({ data }) {
               </div>
             ) : (
               <>
-                <div className="text-lg font-semibold text-gray-800">
+                <div className="text-base sm:text-lg font-semibold text-gray-800">
                   {hw.title}
                 </div>
-                <div className="text-sm text-gray-600 italic">
+                <div className="text-xs sm:text-sm text-gray-600 italic">
                   {hw.description}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-xs sm:text-sm text-gray-500">
                   Due: {new Date(hw.due_date).toLocaleString()}
                 </div>
 
@@ -151,13 +152,13 @@ function DisplayStudentHomework({ data }) {
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700">
                     Submission Text
                   </label>
                   <textarea
                     name="submission_text"
                     rows={3}
-                    className="mt-1 block w-full border px-3 py-2 rounded-md"
+                    className="mt-1 block w-full border px-3 py-2 rounded-md text-sm"
                     defaultValue={assignment.submission_text || ""}
                     disabled={isPastDue}
                     required
@@ -165,13 +166,13 @@ function DisplayStudentHomework({ data }) {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700">
                     Submission File
                   </label>
                   <input
                     name="submission_file"
                     type="file"
-                    className="mt-1 block"
+                    className="mt-1 block text-xs sm:text-sm"
                     accept=".pdf,.doc,.docx,.jpg,.png"
                     disabled={isPastDue}
                   />
@@ -179,7 +180,7 @@ function DisplayStudentHomework({ data }) {
 
                 <button
                   type="submit"
-                  className={`mt-2 px-4 py-2 text-white rounded ${
+                  className={`mt-2 px-4 py-2 text-white rounded w-full sm:w-auto text-sm sm:text-base ${
                     isPastDue
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-blue-600 hover:bg-blue-700"

@@ -30,7 +30,7 @@ function UserCard({ user }) {
   const groups = Array.isArray(user?.groupName) ? user.groupName : [];
 
   return (
-    <div className="relative border rounded-lg p-4 bg-white w-[350px]">
+    <div className="relative w-full rounded-lg border bg-white p-4 sm:w-[350px]">
       <form action={formActionUpdate}>
         {/* Hidden Inputs */}
         <input type="hidden" name="role" value={user?.role} />
@@ -39,13 +39,13 @@ function UserCard({ user }) {
         <input type="hidden" name="originalId" value={user?.id} />
 
         {/* Header */}
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
           <div className="flex items-center gap-1.5">
-            <div className="bg-black text-white font-bold rounded-full w-[40px] h-[40px] flex items-center justify-center">
-              <p className="text-3xl mb-2">{user?.role[0]}</p>
+            <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-black font-bold text-white">
+              <p className="mb-2 text-3xl">{user?.role[0]}</p>
             </div>
             <div>
-              <p className="font-semibold text-lg text-gray-700">
+              <p className="text-lg font-semibold text-gray-700">
                 {user?.full_name}
               </p>
               {isEdit && (
@@ -62,7 +62,7 @@ function UserCard({ user }) {
             <button
               type="button"
               onClick={() => setIsEdit((prev) => !prev)}
-              className="bg-blue-400 text-white text-sm rounded px-5 font-semibold py-1 hover:bg-blue-500 transition w-[50px] flex items-center justify-center"
+              className="flex h-[30px] w-[60px] items-center justify-center rounded bg-blue-400 px-5 py-1 text-sm font-semibold text-white transition hover:bg-blue-500"
             >
               {isEdit ? "Cancel" : "Edit"}
             </button>
@@ -73,11 +73,11 @@ function UserCard({ user }) {
         </div>
 
         {/* Grid Info */}
-        <div className="grid grid-cols-2 gap-x-8 gap-y-4 mt-4">
+        <div className="mt-4 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2">
           {/* Phone Number */}
           <div>
             <label className="font-semibold">Phone Number</label>
-            <p className="text-gray-600 text-sm">{user?.phone_number}</p>
+            <p className="text-sm text-gray-600">{user?.phone_number}</p>
             {isEdit && (
               <EditInput
                 placeholder="Change Phone Number"
@@ -92,7 +92,7 @@ function UserCard({ user }) {
           <div className="relative">
             <label className="font-semibold">Group</label>
             <div
-              className="flex items-center gap-1 w-fit cursor-pointer"
+              className="flex w-fit cursor-pointer items-center gap-1"
               onClick={() => setShowGroupDropdown((prev) => !prev)}
             >
               <img
@@ -102,13 +102,13 @@ function UserCard({ user }) {
                   showGroupDropdown ? "rotate-90" : ""
                 }`}
               />
-              <p className="text-gray-500 text-sm break-all">
+              <p className="break-all text-sm text-gray-500">
                 {groups[0] || "None"}
               </p>
             </div>
 
             {showGroupDropdown && groups.length > 0 && (
-              <div className="absolute top-full left-0 mt-2 max-h-40 overflow-y-auto bg-white shadow-lg border rounded-md w-48 z-20 text-left">
+              <div className="absolute left-0 top-full z-20 mt-2 max-h-40 w-48 overflow-y-auto rounded-md border bg-white text-left shadow-lg">
                 {groups.map((group, idx) => (
                   <div
                     key={idx}
@@ -124,29 +124,29 @@ function UserCard({ user }) {
 
         {/* Success / Error Message */}
         {formStateUpdate?.success && (
-          <div className="text-green-500 mt-2">User updated successfully!</div>
+          <div className="mt-2 text-green-500">User updated successfully!</div>
         )}
         {formStateUpdate?.success === false && (
-          <div className="text-red-500 mt-2">Failed to update user</div>
+          <div className="mt-2 text-red-500">Failed to update user</div>
         )}
       </form>
 
       {/* Delete Button */}
-      <div className="w-full flex flex-row-reverse">
+      <div className="flex w-full flex-row-reverse">
         <form action={formActionDelete} className="mt-4">
           <input type="hidden" name="originalId" value={user?.id} />
           <input type="hidden" name="role" value={user?.role} />
-          <button className="bg-red-400 text-white text-sm rounded px-5 py-1 hover:bg-red-500 transition w-[50px] flex justify-center items-center font-semibold">
+          <button className="flex h-[30px] w-[60px] items-center justify-center rounded bg-red-400 px-5 py-1 text-sm font-semibold text-white transition hover:bg-red-500">
             Delete
           </button>
 
           {formStateDelete?.success && (
-            <div className="text-green-500 mt-2">
+            <div className="mt-2 text-green-500">
               User deleted successfully!
             </div>
           )}
           {formStateDelete?.success === false && (
-            <div className="text-red-500 mt-2">Failed to delete user</div>
+            <div className="mt-2 text-red-500">Failed to delete user</div>
           )}
         </form>
       </div>

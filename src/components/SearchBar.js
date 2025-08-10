@@ -2,13 +2,13 @@
 
 function SearchBar({ searchValue, setSearchValue }) {
   return (
-    <div className="mb-4 w-[380px]">
+    <div className="mb-4 w-full sm:w-[380px]">
       <input
         type="text"
         placeholder="Search by name..."
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
-        className="border px-4 py-2 rounded w-full"
+        className="w-full rounded border px-4 py-2"
       />
     </div>
   );

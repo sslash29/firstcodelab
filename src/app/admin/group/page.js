@@ -7,9 +7,9 @@ export default async function Page() {
   const { instructors, students } = await getUsers();
 
   return (
-    <div className="p-6 flex gap-2 relative h-dvh flex-wrap">
+    <div className="relative h-dvh flex-wrap gap-2 p-4 sm:p-6">
       <Link href="/admin/group/add-group">
-        <button className="border text-black px-4 py-2 rounded-xl fixed bottom-5 right-7 cursor-pointer hover:bg-black hover:text-white transition-all ">
+        <button className="fixed bottom-4 right-4 cursor-pointer rounded-xl border px-4 py-2 text-black transition-all hover:bg-black hover:text-white sm:bottom-5 sm:right-7">
           Add Group
         </button>
       </Link>

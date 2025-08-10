@@ -41,7 +41,7 @@ export default function SessionForm({ groups }) {
 
   return (
     <form
-      className="bg-white border p-6 rounded-2xl text-black w-[500px]"
+      className="bg-white border p-6 rounded-2xl text-black w-full max-w-md sm:max-w-lg md:w-[500px] space-y-5"
       action={formAction}
     >
       {/* Hidden instructor ID */}
@@ -55,7 +55,7 @@ export default function SessionForm({ groups }) {
       <h2 className="text-2xl font-bold">Create New Session</h2>
 
       {/* Start Time */}
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-1 mb-3">
         <label htmlFor="start_time" className="mb-1 font-medium text-gray-500">
           Start Time
         </label>
@@ -71,7 +71,7 @@ export default function SessionForm({ groups }) {
       </div>
 
       {/* End Time */}
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-1 mb-3">
         <label htmlFor="end_time" className="mb-1 font-medium text-gray-500">
           End Time
         </label>
@@ -87,7 +87,7 @@ export default function SessionForm({ groups }) {
       </div>
 
       {/* Session Name */}
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-1 mb-3">
         <label
           htmlFor="session_name"
           className="mb-1 font-medium text-gray-500"
@@ -106,7 +106,7 @@ export default function SessionForm({ groups }) {
       </div>
 
       {/* Session Content */}
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-1 mb-3">
         <label
           htmlFor="session_content"
           className="mb-1 font-medium text-gray-500"
@@ -125,7 +125,7 @@ export default function SessionForm({ groups }) {
       </div>
 
       {/* Group Dropdown */}
-      <div className="flex flex-col mb-6">
+      <div className="flex flex-col space-y-1 mb-8">
         <label htmlFor="group_id" className="mb-1 font-medium text-gray-500">
           Assign to Group
         </label>
@@ -145,11 +145,14 @@ export default function SessionForm({ groups }) {
           ))}
         </select>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <SubmitButton />
-        <button className="text-sm border px-4 py-1 flex items-center justify-center rounded-3xl font-semibold cursor-pointer hover:bg-gray-200">
-          <Link href={"/instructor"}>Cancel</Link>
-        </button>
+        <Link
+          href={"/instructor"}
+          className="text-center text-sm border px-4 py-2 flex items-center justify-center rounded-3xl font-semibold cursor-pointer hover:bg-gray-200"
+        >
+          Cancel
+        </Link>
       </div>
 
       {/* Client-side error */}

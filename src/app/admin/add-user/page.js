@@ -2,7 +2,7 @@ import FormUser from "@/components/FormAddUser";
 
 function page() {
   return (
-    <div>
+    <div className="px-6">
       <FormUser />
     </div>
   );

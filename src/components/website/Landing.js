@@ -10,7 +10,7 @@ function Landing() {
     >
       <div className="h-[500px] flex items-center gap-16 max-sm:gap-4 max-sm:justify-center">
         <div className="flex flex-col max-sm:mt-20">
-          <h1 className="text-5xl font-bold w-[745px] max-sm:text-4xl max-sm:w-[329px] flex items-center flex-col">
+          <h1 className="text-5xl font-bold w-[745px] max-sm:text-4xl max-sm:w-[329px] flex max-sm:items-center  flex-col">
             Empowering the
             <span>Next Generation of</span>
             <span className="text-[#35A7FF]"> [ ...Developers... ]</span>

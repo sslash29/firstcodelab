@@ -19,14 +19,31 @@ async function getUsers() {
 }
 
 async function getUserGroups(userId, role) {
+  // Determine the column to filter by based on role
+  const column = role === "Instructor" ? "instructor_id" : "student_id";
+
+  // Join with the group table to retrieve group names
   const { data, error } = await supabase
     .from("group_assignment")
-    .select("*")
-    .eq(role === "Instructor" ? "instructor_id" : "student_id", userId);
+    .select("group_id, " + column + ", group:group_id ( id, name )")
+    .eq(column, userId);
 
   if (error) throw new Error(JSON.stringify(error));
 
-  return data;
+  if (!data || data.length === 0) return [];
+
+  // Deduplicate by group_id and normalize shape to { id, name }
+  const unique = {};
+  for (const row of data) {
+    if (row.group_id && row.group && !unique[row.group_id]) {
+      unique[row.group_id] = {
+        id: row.group.id,
+        name: row.group.name || `Group ${row.group.id}`,
+      };
+    }
+  }
+
+  return Object.values(unique);
 }
 
 async function getGroups() {

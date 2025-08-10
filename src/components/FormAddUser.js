@@ -20,9 +20,11 @@ function FormUser() {
   };
 
   return (
-    <div className="w-full h-dvh flex items-center justify-center">
-      <div className="flex flex-col items-center justify-center p-5 bg-white border w-[431px] gap-5">
-        <div className="text-center font-bold text-5xl">Create User</div>
+    <div className="w-full h-dvh flex items-center justify-center max-sm:h-fit max-sm:items-start max-sm:pt-5">
+      <div className="flex flex-col items-center justify-center p-5 bg-white border w-[431px] gap-5 max-sm:w-full max-sm:border-none">
+        <div className="text-center font-bold text-5xl max-sm:text-4xl">
+          Create User
+        </div>
 
         <form action={formAction} className="space-y-3 w-full">
           <div className="flex flex-col gap-3">

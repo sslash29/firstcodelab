@@ -66,11 +66,11 @@ export default function DisplayGroup({
   const studentsList = optimisticAssignments.filter((a) => a.student);
 
   return (
-    <div className="bg-white shadow-md rounded-2xl p-6 w-[380px] mt-6 border h-[350px]">
-      <div className="flex items-center justify-between w-full mb-6">
+    <div className="mt-6 h-auto w-full rounded-2xl border bg-white p-6 shadow-md sm:h-[350px] sm:w-[380px] max-sm:w-fit">
+      <div className="mb-6 flex w-full flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <div className="flex items-center gap-2">
-          <div className="bg-black text-white font-bold rounded-full w-[40px] h-[40px] flex items-center justify-center">
-            <p className="text-2xl mb-1">{group.name[0]}</p>
+          <div className="flex h-[40px] w-[40px] items-center justify-center rounded-full bg-black font-bold text-white">
+            <p className="mb-1 text-2xl">{group.name[0]}</p>
           </div>
           <h2 className="text-2xl font-bold text-gray-800">{group.name}</h2>
         </div>
@@ -93,13 +93,13 @@ export default function DisplayGroup({
         </form>
       </div>
 
-      <div className="flex gap-6">
+      <div className="flex flex-col gap-6 sm:flex-row">
         {/* Instructors */}
-        <div className="w-1/2">
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">
+        <div className="w-full sm:w-1/2">
+          <h3 className="mb-2 text-xl font-semibold text-gray-700">
             Instructors
           </h3>
-          <div className="space-y-3 h-[90px] overflow-y-auto pr-1 scrollbar-thin">
+          <div className="h-[90px] space-y-3 overflow-y-auto pr-1 scrollbar-thin">
             {instructorsList.length === 0 ? (
               <p className="text-gray-500">No instructors assigned.</p>
             ) : (
@@ -107,7 +107,7 @@ export default function DisplayGroup({
                 <form
                   key={index}
                   action={deleteInstructorAction}
-                  className="group p-4 rounded-xl flex items-center justify-between w-fit gap-2"
+                  className="group flex w-fit items-center justify-between gap-2 rounded-xl p-4"
                 >
                   <input type="hidden" name="groupId" value={group.id} />
                   <input
@@ -139,9 +139,9 @@ export default function DisplayGroup({
         </div>
 
         {/* Students */}
-        <div className="w-1/2">
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">Students</h3>
-          <div className="space-y-3 h-[90px] overflow-y-auto pr-1 scrollbar-thin">
+        <div className="w-full sm:w-1/2">
+          <h3 className="mb-2 text-xl font-semibold text-gray-700">Students</h3>
+          <div className="h-[90px] space-y-3 overflow-y-auto pr-1 scrollbar-thin">
             {studentsList.length === 0 ? (
               <p className="text-gray-500">No students assigned.</p>
             ) : (
@@ -149,7 +149,7 @@ export default function DisplayGroup({
                 <form
                   key={index}
                   action={deleteStudentAction}
-                  className="group p-4 rounded-xl flex items-center justify-between w-fit gap-2"
+                  className="group flex w-fit items-center justify-between gap-2 rounded-xl p-4"
                 >
                   <input type="hidden" name="groupId" value={group.id} />
                   <input

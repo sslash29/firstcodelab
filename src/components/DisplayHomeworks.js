@@ -3,7 +3,7 @@
 import { useState } from "react";
 import DisplayHomework from "./DisplayHomework";
 
-function DisplayHomeworks({ homeworks }) {
+function DisplayHomeworks({ homeworks = [] }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState("submitted");
 
@@ -17,29 +17,29 @@ function DisplayHomeworks({ homeworks }) {
   };
 
   return (
-    <div className="flex flex-col px-6 gap-5">
-      <div className="flex justify-between items-center">
-        <h2 className="font-semibold text-4xl">Homework</h2>
-        <div className="relative">
+    <div className="flex flex-col gap-5 px-3 sm:px-6">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <h2 className="text-2xl sm:text-4xl font-semibold">Homework</h2>
+        <div className="relative w-full sm:w-auto">
           <button
-            className="border font-regular flex items-center text-xl rounded-xl px-4 gap-2"
+            className="flex items-center gap-2 rounded-xl border px-4 py-2 text-base sm:text-xl w-full sm:w-auto justify-between sm:justify-center"
             onClick={toggleFilterDropdown}
           >
             {selectedFilter === "submitted" ? "Submitted" : "Not Submitted"}
             <img
               src="/SmallEnlargeArrow.svg"
               alt="Arrow"
-              className={`scale-150 mt-0.5 transition-transform ${
+              className={`mt-0.5 scale-125 sm:scale-150 transition-transform ${
                 isFilterOpen ? "rotate-270" : "rotate-90"
               }`}
             />
           </button>
 
           {isFilterOpen && (
-            <div className="absolute bg-white border mt-2 rounded-xl shadow-md w-full z-10">
+            <div className="absolute z-10 mt-2 w-full rounded-xl border bg-white shadow-md">
               <button
                 onClick={() => handleFilterSelect("submitted")}
-                className={`block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-t-xl ${
+                className={`block w-full rounded-t-xl px-4 py-2 text-left hover:bg-gray-100 ${
                   selectedFilter === "submitted" ? "font-semibold" : ""
                 }`}
               >
@@ -47,7 +47,7 @@ function DisplayHomeworks({ homeworks }) {
               </button>
               <button
                 onClick={() => handleFilterSelect("notSubmitted")}
-                className={`block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-b-xl ${
+                className={`block w-full rounded-b-xl px-4 py-2 text-left hover:bg-gray-100 ${
                   selectedFilter === "notSubmitted" ? "font-semibold" : ""
                 }`}
               >
@@ -58,21 +58,22 @@ function DisplayHomeworks({ homeworks }) {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4">
-        {homeworks.map((homework, key) => {
+      <div className="flex flex-col sm:flex-wrap sm:flex-row gap-4 sm:justify-start">
+        {homeworks?.map((homework, key) => {
           const submissions =
             selectedFilter === "submitted"
               ? homework.submitted
               : homework.notSubmitted;
 
           return submissions.map((student, i) => (
-            <DisplayHomework
-              key={`${key}-${i}`}
-              homeworkData={{
-                homework: homework.homework,
-                submitted: [student],
-              }}
-            />
+            <div key={`${key}-${i}`} className="w-full sm:w-auto">
+              <DisplayHomework
+                homeworkData={{
+                  homework: homework.homework,
+                  submitted: [student],
+                }}
+              />
+            </div>
           ));
         })}
       </div>

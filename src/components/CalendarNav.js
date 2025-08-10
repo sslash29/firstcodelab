@@ -26,20 +26,20 @@ export default function CalendarNav({ sessions, type = "instructor" }) {
     : format(selectedDate, "MMM dd, yyyy");
 
   return (
-    <div className="p-6 bg-[#f2f2f2] min-h-screen w-full relative">
+    <div className="relative w-full min-h-screen bg-[#f2f2f2] p-4 sm:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-semibold">{formattedDate}</h1>
+      <div className="mb-4 flex items-center justify-between">
+        <h1 className="text-xl font-semibold sm:text-2xl">{formattedDate}</h1>
         <div className="flex items-center gap-2">
           <button
             onClick={goToPrevDay}
-            className="border border-black rounded-full w-8 h-8 flex items-center justify-center hover:bg-black hover:text-white transition"
+            className="flex h-6 w-6 items-center justify-center rounded-full border border-black transition hover:bg-black hover:text-white sm:h-8 sm:w-8"
           >
             ←
           </button>
           <button
             onClick={goToNextDay}
-            className="border border-black rounded-full w-8 h-8 flex items-center justify-center hover:bg-black hover:text-white transition"
+            className="flex h-6 w-6 items-center justify-center rounded-full border border-black transition hover:bg-black hover:text-white sm:h-8 sm:w-8"
           >
             →
           </button>
@@ -47,10 +47,10 @@ export default function CalendarNav({ sessions, type = "instructor" }) {
       </div>
 
       {/* Scrollable timeline */}
-      <div className="relative h-[80vh] overflow-y-auto border-l border-gray-300 pl-16">
+      <div className="relative h-[75vh] overflow-y-auto border-l border-gray-300 pl-14 sm:h-[80vh] sm:pl-16">
         {hours.map((hour) => (
           <div key={hour} className="relative h-24 border-t border-gray-300">
-            <span className="absolute -left-12 text-sm text-gray-500 top-2">
+            <span className="absolute -left-10 top-2 text-sm text-gray-500 sm:-left-12">
               {`${String(hour).padStart(2, "0")}:00`}
             </span>
           </div>
@@ -72,7 +72,7 @@ export default function CalendarNav({ sessions, type = "instructor" }) {
           ))}
       </div>
       {type === "instructor" && (
-        <button className="text-sm border px-4 py-1 flex items-center justify-center rounded-3xl font-semibold cursor-pointer hover:bg-gray-200 absolute bottom-5 right-5">
+        <button className="absolute bottom-4 right-4 flex cursor-pointer items-center justify-center rounded-3xl border px-4 py-1 text-sm font-semibold hover:bg-gray-200 sm:bottom-5 sm:right-5">
           <Link href={"/instructor/create-session"}>Create Sesssion</Link>
         </button>
       )}

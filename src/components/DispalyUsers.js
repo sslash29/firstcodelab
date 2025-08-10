@@ -16,8 +16,8 @@ function DisplayUsers({ users = [] }) {
   return (
     <div className="flex flex-col">
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
-      <div className="p-6 max-w-screen-xl mx-auto">
-        <div className="flex flex-wrap gap-6 ">
+      <div className="p-6 max-w-screen-xl mx-auto max-sm:p-2">
+        <div className="flex flex-wrap gap-6 max-sm:justify-center max-sm:gap-3">
           {userData && userData.length > 0 ? (
             userData.map((user, index) => (
               <div key={index}>

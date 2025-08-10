@@ -18,7 +18,7 @@ function GroupDisplayer({ groups, instructors, students }) {
   return (
     <div className="flex flex-col">
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
-      <div className="flex gap-1.5 ">
+      <div className="flex flex-col gap-1.5 sm:flex-row max-sm:items-center">
         {groupsData && groupsData.length > 0 ? (
           groupsData.map((group) => (
             <DisplayGroup
