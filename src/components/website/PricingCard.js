@@ -34,7 +34,7 @@ function PricingCard({
 
       {/* Button */}
       <button className="font-bold px-4 py-2 flex items-center justify-center rounded-lg bg-[#DDDDE3] w-full">
-        <a href="https://wa.me/+201278953422" target="_blank">
+        <a href="https://wa.me/201278953422" target="_blank">
           Get Started
         </a>
       </button>
