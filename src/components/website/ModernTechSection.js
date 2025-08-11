@@ -1,8 +1,11 @@
+import { useI18n } from "@/lib/i18n";
+
 function ModernTechSection() {
+  const { t } = useI18n();
   return (
     <div className="px-4 sm:px-16 flex flex-col gap-5">
       <h2 className="text-3xl sm:text-5xl text-center font-bold">
-        Learn Modern Technology
+        {t("tech.learnModern")}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-5 auto-rows-[minmax(100px,_auto)] gap-4">
         {/* Row 1 - Big on left */}
@@ -11,29 +14,25 @@ function ModernTechSection() {
             <div className="flex items-center gap-2.5">
               <img src="/Code.svg" alt="Code" />
               <h2 className="text-2xl sm:text-[36px] font-bold">
-                Frontend Development
+                {t("tech.frontendDev")}
               </h2>
             </div>
             <div className="flex flex-col gap-3.5">
               <p className="w-full sm:w-[290px] text-lg sm:text-[20px] opacity-70">
-                start by learning the{" "}
-                <span className="opacity-100 font-bold">
-                  basics of frontend{" "}
-                </span>
-                with its latest updates!.
+                {t("tech.frontendDesc")}
               </p>
               <div className="flex flex-col text-base sm:text-[18px]">
                 <div className="flex gap-2.5 items-center">
                   <img src="/Check.svg" alt="Check" />
-                  <p>Learn Basics of Frontend</p>
+                  <p>{t("tech.frontendBullet1")}</p>
                 </div>
                 <div className="flex gap-2.5 items-center">
                   <img src="/Check.svg" alt="Check" />
-                  <p>Master The Modern Way Of Writing Code</p>
+                  <p>{t("tech.frontendBullet2")}</p>
                 </div>
                 <div className="flex gap-2.5 items-center">
                   <img src="/Check.svg" alt="Check" />
-                  <p>Learn By Practicing</p>
+                  <p>{t("tech.frontendBullet3")}</p>
                 </div>
               </div>
             </div>
@@ -47,19 +46,19 @@ function ModernTechSection() {
           </div>
         </div>
 
-        <div className="sm:col-start-4 sm:col-span-1 sm:row-span-3 flex flex-col bg-[#DDDCE3] border p-5 py-4 rounded-lg relative gap-3">
+        <div className="sm:col-start-4 sm:col-span-1 sm:row-span-3 flex flex-col bg-[#DDDCE3] border p-5 py-4 rounded-lg relative gap-8 pb-0">
           <div className="flex items-center gap-2">
             <img src="/Books.svg" alt="Books" />
             <h3 className="w-full sm:w-[200px] font-bold opacity-90 text-lg sm:text-[20px]">
-              Learn JS Library
+              {t("tech.jsLibrary")}
             </h3>
           </div>
           <div>
             <h3 className="font-bold text-base sm:text-[18px]">
-              Up your skills with React
+              {t("tech.upSkills")}
             </h3>
             <p className="text-sm sm:text-[16px]">
-              Write code in a professional way
+              {t("tech.writeProfessional")}
             </p>
           </div>
           <div className="absolute bottom-0 right-0 sm:relative sm:bottom-auto sm:right-auto">
@@ -67,20 +66,19 @@ function ModernTechSection() {
           </div>
         </div>
 
-        <div className="sm:col-start-5 sm:col-span-1 sm:row-span-3 flex flex-col bg-[#DDDCE3] border p-5 py-4 rounded-lg relative gap-3">
+        <div className="sm:col-start-5 sm:col-span-1 sm:row-span-3 flex flex-col bg-[#DDDCE3] border p-5 py-4 rounded-lg relative gap-10 pb-0 ">
           <div className="flex items-center gap-2">
             <img src="/Triangle.svg" alt="Triangle" />
             <h3 className="w-full sm:w-[200px] font-bold opacity-90 text-lg sm:text-[20px]">
-              Learn Framework
+              {t("tech.learnFramework")}
             </h3>
           </div>
           <div>
             <h3 className="font-bold text-base sm:text-[18px]">
-              Master Modern Tech
+              {t("tech.masterModernTech")}
             </h3>
             <p className="text-sm sm:text-[16px] max-sm:w-[265px]">
-              Learn the framework built for React,{" "}
-              <span className="font-bold">Next.js</span>.
+              {t("tech.learnNext")}
             </p>
           </div>
           <div className="absolute bottom-0 right-0 sm:relative sm:bottom-auto sm:translate-x-[15px]">
@@ -89,19 +87,19 @@ function ModernTechSection() {
         </div>
 
         {/* Row 2 - Big on right */}
-        <div className="sm:col-start-1 sm:col-span-1 sm:row-span-3 flex flex-col bg-[#DDDCE3] border p-5 py-4 rounded-lg relative gap-3">
+        <div className="sm:col-start-1 sm:col-span-1 sm:row-span-3 flex flex-col bg-[#DDDCE3] border p-5 py-4 rounded-lg relative gap-10 pb-0">
           <div className="flex items-center gap-2">
             <img src="/Terminal.svg" alt="Terminal" />
             <h3 className="w-full sm:w-[200px] font-bold opacity-90 text-lg sm:text-[20px]">
-              Backend Language
+              {t("tech.backendLang")}
             </h3>
           </div>
           <div>
             <h3 className="font-bold text-base sm:text-[18px]">
-              Server-Side Language
+              {t("tech.serverSideLang")}
             </h3>
             <p className="text-sm sm:text-[16px] max-sm:w-[200px]">
-              Widely-used language for web, data, and scripting.
+              {t("tech.serverSideDesc")}
             </p>
           </div>
           <div className="absolute bottom-0 right-0 sm:relative sm:bottom-auto sm:translate-x-[15px]">
@@ -109,19 +107,19 @@ function ModernTechSection() {
           </div>
         </div>
 
-        <div className="sm:col-start-2 sm:col-span-1 sm:row-span-3 flex flex-col bg-[#DDDCE3] border p-5 py-4 rounded-lg relative gap-3">
+        <div className="sm:col-start-2 sm:col-span-1 sm:row-span-3 flex flex-col bg-[#DDDCE3] border p-5 py-4 rounded-lg relative gap-6 pb-0">
           <div className="flex items-center gap-2">
             <img src="/Triangle.svg" alt="Triangle" />
             <h3 className="w-full sm:w-[200px] font-bold opacity-90 text-lg sm:text-[20px]">
-              Mobile Framework
+              {t("tech.mobileFramework")}
             </h3>
           </div>
           <div>
             <h3 className="font-bold text-base sm:text-[18px]">
-              Master Modern Tech
+              {t("tech.masterModernTech")}
             </h3>
             <p className="text-sm sm:text-[16px] max-sm:w-[240px]">
-              Cross-platform language for responsive and native-feeling apps.
+              {t("tech.crossPlatformDesc")}
             </p>
           </div>
           <div className="absolute bottom-0 right-0 sm:relative sm:bottom-auto sm:translate-x-[15px]">
@@ -134,29 +132,25 @@ function ModernTechSection() {
             <div className="flex items-center gap-2.5">
               <img src="/DatabaseSmall.svg" alt="Database" />
               <h2 className="text-2xl sm:text-[36px] font-bold">
-                Backend Development
+                {t("tech.backendDev")}
               </h2>
             </div>
             <div className="flex flex-col gap-3.5">
               <p className="w-full sm:w-[290px] text-lg sm:text-[20px] opacity-70">
-                start by learning the{" "}
-                <span className="opacity-100 font-bold">
-                  basics of backend{" "}
-                </span>
-                with its best security practices!.
+                {t("tech.backendDesc")}
               </p>
               <div className="flex flex-col text-base sm:text-[18px]">
                 <div className="flex gap-2.5 items-center">
                   <img src="/Check.svg" alt="Check" />
-                  <p>Learn Basics of Backend</p>
+                  <p>{t("tech.backendBullet1")}</p>
                 </div>
                 <div className="flex gap-2.5 items-center">
                   <img src="/Check.svg" alt="Check" />
-                  <p>Learn SQL</p>
+                  <p>{t("tech.backendBullet2")}</p>
                 </div>
                 <div className="flex gap-2.5 items-center">
                   <img src="/Check.svg" alt="Check" />
-                  <p>Create Your Own Server</p>
+                  <p>{t("tech.backendBullet3")}</p>
                 </div>
               </div>
             </div>

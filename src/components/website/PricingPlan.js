@@ -1,37 +1,34 @@
 "use client";
 
 import PricingCard from "./PricingCard";
+import { useI18n } from "@/lib/i18n";
 
 function PricingPlan() {
+  const { t } = useI18n();
   return (
     <div className="px-4 sm:px-16 flex flex-col gap-10 sm:gap-16">
       <div className="font-bold text-3xl sm:text-4xl">
-        <h2 className="text-center">We’ve got the plan that’s </h2>
-        <h2 className="text-center">Perfect For You</h2>
+        <h2 className="text-center">{t("pricing.title1")}</h2>
+        <h2 className="text-center">{t("pricing.title2")}</h2>
       </div>
       <div className="flex flex-col sm:flex-row gap-5">
-        <PricingCard />
         <PricingCard
-          planName="Gold"
-          price={1000}
-          isPopular={true}
-          features={[
-            "Personalized 1:1 Course with Instructor",
-            "Choose The Path You Want to follow",
-            "We Can Create a custom plan for you",
-            "12/7 Chat Support for Any Issues",
-          ]}
+          planKey="silver"
+          planName={t("pricing.silverPlan")}
+          features={t("pricing.silverFeatures")}
         />
         <PricingCard
-          planName="Custom"
+          planKey="gold"
+          planName={t("pricing.goldPlan")}
+          price={1000}
+          isPopular={true}
+          features={t("pricing.goldFeatures")}
+        />
+        <PricingCard
+          planKey="custom"
+          planName={t("pricing.customPlan")}
           price={"1000+"}
-          features={[
-            "Personalized 1:1 Course with Instructor",
-            "Personalized Time of each session",
-            "24/7 Chat Support for Any Issues",
-            "Customizable Curriculum (based on skill level or goals)",
-            "Dedicated Instructor (Mentor)",
-          ]}
+          features={t("pricing.customFeatures")}
         />
       </div>
     </div>
